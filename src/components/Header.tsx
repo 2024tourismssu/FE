@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { useState } from 'react'
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
@@ -10,8 +11,7 @@ import Container from '@mui/material/Container'
 import Button from '@mui/material/Button'
 import SearchIcon from '@mui/icons-material/Search'
 import MenuItem from '@mui/material/MenuItem'
-import { useState } from 'react'
-import { styled, alpha } from '@mui/material/styles'
+import { alpha, styled } from '@mui/material/styles'
 import InputBase from '@mui/material/InputBase'
 
 const pages = ['축제', '공연', '행사', '문화시설']
@@ -76,10 +76,10 @@ function Header() {
                   variant="h6"
                   noWrap
                   component="a"
-                  href="#app-bar-with-responsive-menu"
+                  href="/"
                   sx={{
                      mr: 2,
-                     display: { xs: 'none', md: 'flex' }, // show on medium and larger screens
+                     display: { xs: 'none', md: 'flex' },
                      fontFamily: 'monospace',
                      fontWeight: 700,
                      letterSpacing: '.3rem',
@@ -124,10 +124,10 @@ function Header() {
                   variant="h5"
                   noWrap
                   component="a"
-                  href="#app-bar-with-responsive-menu"
+                  href="/"
                   sx={{
                      mr: 2,
-                     display: { xs: 'flex', md: 'none' }, // change from 'sm' to 'md' for 768px breakpoint
+                     display: { xs: 'flex', md: 'none' },
                      flexGrow: 1,
                      fontFamily: 'monospace',
                      fontWeight: 700,
