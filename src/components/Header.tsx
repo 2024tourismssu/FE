@@ -3,31 +3,30 @@ import { useState } from 'react'
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
-import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
-import Menu from '@mui/material/Menu'
-import MenuIcon from '@mui/icons-material/Menu'
 import Container from '@mui/material/Container'
 import Button from '@mui/material/Button'
 import SearchIcon from '@mui/icons-material/Search'
-import MenuItem from '@mui/material/MenuItem'
-import { alpha, styled } from '@mui/material/styles'
+import { styled } from '@mui/material/styles'
 import InputBase from '@mui/material/InputBase'
+import ImageComponent from './Image.tsx'
+import Logo from '../assets/images/Logo.png'
+import IconButton from '@mui/material/IconButton'
+import MenuIcon from '@mui/icons-material/Menu'
+import Menu from '@mui/material/Menu'
+import MenuItem from '@mui/material/MenuItem'
 
-const pages = ['축제', '공연', '행사', '문화시설']
+const pages = ['축제', '공연', '행사', '문화시설', '팝업 스토어']
 
 const Search = styled('div')(({ theme }) => ({
    position: 'relative',
    borderRadius: theme.shape.borderRadius,
-   backgroundColor: alpha(theme.palette.common.white, 0.15),
-   '&:hover': {
-      backgroundColor: alpha(theme.palette.common.white, 0.25),
-   },
-   marginLeft: 0,
-   width: '40%',
+   backgroundColor: '#E3DFDF',
+   marginLeft: '1rem',
+   marginRight: '1rem',
+   width: '50%',
    [theme.breakpoints.up('md')]: {
-      marginLeft: theme.spacing(1),
-      width: 'auto',
+      width: '30%',
    },
 }))
 
@@ -69,29 +68,52 @@ function Header() {
    }
 
    return (
-      <AppBar position="static">
-         <Container maxWidth={false} sx={{ width: '85%' }}>
+      <AppBar sx={{ backgroundColor: 'white', color: 'black', border: '1px solid black' }}>
+         <Container maxWidth={false} sx={{ width: '70%' }}>
             <Toolbar disableGutters>
-               <Typography
-                  variant="h6"
-                  noWrap
-                  component="a"
-                  href="/"
-                  sx={{
-                     mr: 2,
-                     display: { xs: 'none', md: 'flex' },
-                     fontFamily: 'monospace',
-                     fontWeight: 700,
-                     letterSpacing: '.3rem',
-                     color: 'inherit',
-                     textDecoration: 'none',
-                  }}
-               >
-                  LOGO
-               </Typography>
+               <ImageComponent src={Logo} sx={{ width: '100px', height: '50px' }} />
+
+               <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+                  {pages.map((page, index) => (
+                     <React.Fragment key={page}>
+                        <Button
+                           onClick={handleCloseNavMenu}
+                           sx={{
+                              my: 2,
+                              color: 'black',
+                              display: 'block',
+                              margin: 1,
+                              padding: 1,
+                              border: 'solid 1px black',
+                           }}
+                        >
+                           {page}
+                        </Button>
+                        {index === 3 && (
+                           <Typography
+                              sx={{
+                                 color: 'black',
+                                 display: 'flex',
+                                 alignItems: 'center',
+                                 padding: '0 8px',
+                              }}
+                           >
+                              |
+                           </Typography>
+                        )}
+                     </React.Fragment>
+                  ))}
+               </Box>
+
+               <Search>
+                  <SearchIconWrapper>
+                     <SearchIcon />
+                  </SearchIconWrapper>
+                  <StyledInputBase placeholder="Search…" inputProps={{ 'aria-label': 'search' }} />
+               </Search>
 
                <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-                  <IconButton size="large" aria-label="account of current user" aria-controls="menu-appbar" aria-haspopup="true" onClick={handleOpenNavMenu} color="inherit">
+                  <IconButton size="large" aria-label="account of current user" aria-controls="menu-appbar" aria-haspopup="true" onClick={handleOpenNavMenu}>
                      <MenuIcon />
                   </IconButton>
                   <Menu
@@ -99,17 +121,17 @@ function Header() {
                      anchorEl={anchorElNav}
                      anchorOrigin={{
                         vertical: 'bottom',
-                        horizontal: 'left',
+                        horizontal: 'right',
                      }}
                      keepMounted
                      transformOrigin={{
                         vertical: 'top',
-                        horizontal: 'left',
+                        horizontal: 'right',
                      }}
                      open={Boolean(anchorElNav)}
                      onClose={handleCloseNavMenu}
                      sx={{
-                        display: { xs: 'block', md: 'none' }, // change from 'sm' to 'md' for 768px breakpoint
+                        display: { xs: 'block', md: 'none' },
                      }}
                   >
                      {pages.map((page) => (
@@ -119,44 +141,6 @@ function Header() {
                      ))}
                   </Menu>
                </Box>
-
-               <Typography
-                  variant="h5"
-                  noWrap
-                  component="a"
-                  href="/"
-                  sx={{
-                     mr: 2,
-                     display: { xs: 'flex', md: 'none' },
-                     flexGrow: 1,
-                     fontFamily: 'monospace',
-                     fontWeight: 700,
-                     letterSpacing: '.3rem',
-                     color: 'inherit',
-                     textDecoration: 'none',
-                  }}
-               >
-                  LOGO
-               </Typography>
-               <Box
-                  sx={{
-                     flexGrow: 1,
-                     display: { xs: 'none', md: 'flex' },
-                  }}
-               >
-                  {pages.map((page) => (
-                     <Button key={page} onClick={handleCloseNavMenu} sx={{ my: 2, color: 'white', display: 'block', backgroundColor: 'black', margin: 1 }}>
-                        {page}
-                     </Button>
-                  ))}
-               </Box>
-               <Search>
-                  <SearchIconWrapper>
-                     <SearchIcon />
-                  </SearchIconWrapper>
-                  <StyledInputBase placeholder="Search…" inputProps={{ 'aria-label': 'search' }} />
-               </Search>
-               <Button sx={{ my: 2, color: 'white', display: 'block', backgroundColor: 'black', margin: 1 }}>팝업 스토어</Button>
             </Toolbar>
          </Container>
       </AppBar>
