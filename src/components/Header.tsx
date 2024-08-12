@@ -84,7 +84,11 @@ function Header() {
       <AppBar sx={{ backgroundColor: 'white', color: 'black', border: '1px solid black' }}>
          <Container maxWidth={false} sx={{ width: '70%' }}>
             <Toolbar disableGutters>
-               <ImageComponent src={Logo} sx={{ width: '100px', height: '50px' }} />
+               <ImageComponent
+                  src={Logo}
+                  sx={{ width: '100px', height: '50px', cursor: 'pointer' }} // cursor: pointer로 마우스 오버 시 손 모양 아이콘 표시
+                  onClick={() => handleNavigation('/')}
+               />
 
                <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                   {pages.map((page, index) => (
