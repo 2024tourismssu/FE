@@ -15,8 +15,15 @@ import IconButton from '@mui/material/IconButton'
 import MenuIcon from '@mui/icons-material/Menu'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
+import { useNavigate } from 'react-router-dom'
 
-const pages = ['축제', '공연', '행사', '문화시설', '팝업 스토어']
+const pages = [
+   { label: '축제', path: '/festival' },
+   { label: '공연', path: '/concert' },
+   { label: '행사', path: '/event' },
+   { label: '문화시설', path: '/facility' },
+   { label: '팝업 스토어', path: '/popup' },
+]
 
 const Search = styled('div')(({ theme }) => ({
    position: 'relative',
@@ -58,6 +65,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 function Header() {
    const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null)
+   const navigate = useNavigate()
 
    const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
       setAnchorElNav(event.currentTarget)
@@ -65,6 +73,11 @@ function Header() {
 
    const handleCloseNavMenu = () => {
       setAnchorElNav(null)
+   }
+
+   const handleNavigation = (path: string) => {
+      navigate(path)
+      handleCloseNavMenu() // 모바일 메뉴를 닫기 위해
    }
 
    return (
@@ -75,9 +88,9 @@ function Header() {
 
                <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                   {pages.map((page, index) => (
-                     <React.Fragment key={page}>
+                     <React.Fragment key={page.label}>
                         <Button
-                           onClick={handleCloseNavMenu}
+                           onClick={() => handleNavigation(page.path)}
                            sx={{
                               my: 2,
                               color: 'black',
@@ -87,7 +100,7 @@ function Header() {
                               border: 'solid 1px black',
                            }}
                         >
-                           {page}
+                           {page.label}
                         </Button>
                         {index === 3 && (
                            <Typography
@@ -135,8 +148,8 @@ function Header() {
                      }}
                   >
                      {pages.map((page) => (
-                        <MenuItem key={page} onClick={handleCloseNavMenu}>
-                           <Typography textAlign="center">{page}</Typography>
+                        <MenuItem key={page.label} onClick={() => handleNavigation(page.path)}>
+                           <Typography textAlign="center">{page.label}</Typography>
                         </MenuItem>
                      ))}
                   </Menu>
