@@ -5,6 +5,7 @@ const FacilityPage = () => {
    return (
       <Box>
          <Header />
+         <Box>FacilityPage~</Box>
       </Box>
    )
 }

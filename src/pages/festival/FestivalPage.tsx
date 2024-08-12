@@ -5,6 +5,7 @@ const FestivalPage = () => {
    return (
       <Box>
          <Header />
+         <Box>FestivalPage~</Box>
       </Box>
    )
 }

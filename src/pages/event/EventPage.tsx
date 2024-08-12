@@ -5,6 +5,7 @@ const EventPage = () => {
    return (
       <Box>
          <Header />
+         <Box>EventPage~</Box>
       </Box>
    )
 }
