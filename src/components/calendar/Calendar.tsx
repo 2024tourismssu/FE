@@ -31,6 +31,7 @@ const CustomCalendar = () => {
          <Calendar
             onChange={setSelectedDate}
             value={selectedDate}
+            locale="en"
             calendarType="gregory"
             view="month"
             prev2Label={null}
@@ -39,8 +40,8 @@ const CustomCalendar = () => {
             selectRange={true}
             tileClassName={tileClassName}
             tileDisabled={tileDisabled}
-            formatDay={(_locale, date) => moment(date).format('DD')}
-            navigationLabel={({ date }) => moment(date).format('YYYY년 MMMM')}
+            formatDay={(_locale, date) => moment(date).format('D')}
+            navigationLabel={({ date }) => moment(date).format('MMMM YYYY')}
             onClickMonth={() => {}}
             onClickYear={() => {}}
          />
