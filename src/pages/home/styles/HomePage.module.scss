@@ -6,7 +6,19 @@
   height: 100vh;
   margin-top: 8rem;
 
-  @media (max-width: 768px) {
-  
+  &__subContent {
+    padding-top: 1.5rem;
+    font-size: 12px;
+  }
+
+  &__mainContent {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    margin-top: 4rem;
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
   }
 }
