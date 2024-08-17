@@ -1,49 +1,39 @@
 import { useState } from 'react'
-import Calendar from 'react-calendar'
 import Box from '@mui/material/Box'
+import Calendar from 'react-calendar'
 import moment from 'moment'
-import 'react-calendar/dist/Calendar.css'
+import './styles.css'
 
-type DatePiece = Date | null
-type SelectedDate = DatePiece | [DatePiece, DatePiece]
+type ValuePiece = Date | null
+type Value = ValuePiece | [ValuePiece, ValuePiece]
+
+interface CalendarTileProperties {
+   date: Date
+   view: 'month' | 'year' | 'decade' | 'century'
+}
 
 const CustomCalendar = () => {
-   const [selectedDate, setSelectedDate] = useState<SelectedDate>(null)
+   const today = new Date()
+   const [value, setValue] = useState<Value>(new Date())
 
-   const tileClassName = ({ date }: { date: Date }) => {
-      if (selectedDate instanceof Array) {
-         const [start, end] = selectedDate
-         if (start && end && date > start && date < end) {
-            return 'highlight'
-         }
-      }
-      return null
-   }
+   today.setHours(0, 0, 0, 0)
 
-   const tileDisabled = ({ date }: { date: Date }) => {
-      const today = new Date()
-      today.setHours(0, 0, 0, 0)
-      return date < today
+   const disablePastDates = ({ date, view }: CalendarTileProperties): boolean => {
+      return view === 'month' && date < today
    }
 
    return (
       <Box>
          <Calendar
-            onChange={setSelectedDate}
-            value={selectedDate}
-            locale="en"
-            calendarType="gregory"
-            view="month"
-            prev2Label={null}
-            next2Label={null}
             showNeighboringMonth={false}
-            selectRange={true}
-            tileClassName={tileClassName}
-            tileDisabled={tileDisabled}
+            calendarType="gregory"
             formatDay={(_locale, date) => moment(date).format('D')}
-            navigationLabel={({ date }) => moment(date).format('MMMM YYYY')}
-            onClickMonth={() => {}}
-            onClickYear={() => {}}
+            formatMonthYear={(_locale, date) => moment(date).format('YYYY. MM')}
+            next2Label={null}
+            prev2Label={null}
+            tileDisabled={disablePastDates}
+            value={value}
+            onChange={setValue}
          />
       </Box>
    )
