@@ -6,19 +6,21 @@
   height: 100vh;
   margin-top: 8rem;
 
-  &__subContent {
-    padding-top: 1.5rem;
-    font-size: 12px;
-  }
+}
 
-  &__mainContent {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2rem;
-    margin-top: 4rem;
+.calendarWrapper {
+  position: fixed;
+  bottom: 72px;
+  right: 16px;
+  z-index: 999;
+  background-color: white;
+  border-radius: 8px;
+ 
+}
 
-    @media (max-width: 768px) {
-      grid-template-columns: 1fr;
-    }
-  }
+.buttonContainer {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  z-index: 1000;
 }
