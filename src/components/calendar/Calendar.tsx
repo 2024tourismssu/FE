@@ -14,7 +14,7 @@ interface CalendarTileProperties {
 
 const CustomCalendar = () => {
    const today = new Date()
-   const [value, setValue] = useState<Value>(new Date())
+   const [value, setValue] = useState<Value>([null, null])
 
    today.setHours(0, 0, 0, 0)
 
@@ -25,6 +25,7 @@ const CustomCalendar = () => {
    return (
       <Box>
          <Calendar
+            selectRange={true}
             showNeighboringMonth={false}
             calendarType="gregory"
             formatDay={(_locale, date) => moment(date).format('D')}
