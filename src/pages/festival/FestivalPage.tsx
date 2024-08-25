@@ -5,6 +5,7 @@ import CustomCalendar from '../../components/calendar/Calendar.tsx'
 import CalendarButton from '../../components/iconButton/CalendarButton.tsx'
 import styles from './styles/FestivalPage.module.scss'
 import Weather from '../../components/weather/Weather.tsx'
+import Festival from '../../components/festival/Festival.tsx'
 
 const FestivalPage = () => {
    const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 768)
@@ -40,7 +41,8 @@ const FestivalPage = () => {
             {!isMobile && (
                <Box>
                   <CustomCalendar />
-                  <Weather />
+                  <Weather regId={'11B00000'} tmFc={'20240825'} />
+                  <Festival />
                </Box>
             )}
          </Box>

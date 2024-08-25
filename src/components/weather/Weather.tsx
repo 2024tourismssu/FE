@@ -1,25 +1,26 @@
-import { useState } from 'react'
 import axios from 'axios'
 import Box from '@mui/material/Box'
-import moment from 'moment'
 
-const Weather = () => {
-   const [weatherData, setWeatherData] = useState(null)
-   const [loading, setLoading] = useState(false)
-   const cityName = 'Seoul'
+interface WeatherProps {
+   regId: string
+   tmFc: string
+}
+
+const Weather = ({ regId, tmFc }: WeatherProps) => {
    const apikey = import.meta.env.VITE_API_KEY
    const url = 'http://apis.data.go.kr/1360000/MidFcstInfoService/getMidLandFcst'
 
    const fetchWeatherData = async () => {
-      setLoading(true)
       try {
+         const fullTmFc = `${tmFc}0600`
+
          const response = await axios.get(url, {
             params: {
                ServiceKey: apikey,
                numOfRows: 10,
                pageNo: 1,
-               regId: '11B00000',
-               tmFc: moment().format('YYYYMMDD0600'),
+               regId: regId,
+               tmFc: fullTmFc,
                dataType: 'JSON',
             },
             headers: {
@@ -27,25 +28,15 @@ const Weather = () => {
             },
             responseType: 'json',
          })
-         setWeatherData(response.data)
+         console.log(response.data.response.body.items.item[0])
       } catch (error) {
          console.error('Error fetching the weather data', error)
-      } finally {
-         setLoading(false)
       }
    }
 
    return (
       <Box>
-         <button onClick={fetchWeatherData} disabled={loading}>
-            {loading ? 'Loading...' : 'Fetch Weather Data'}
-         </button>
-         {weatherData && (
-            <div>
-               <h2>Weather Information for {cityName}</h2>
-               <pre>{JSON.stringify(weatherData, null, 2)}</pre>
-            </div>
-         )}
+         <button onClick={fetchWeatherData}>hoe</button>
       </Box>
    )
 }
