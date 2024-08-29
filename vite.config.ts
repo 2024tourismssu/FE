@@ -6,12 +6,13 @@ export default defineConfig({
    plugins: [react()],
    resolve: {
       alias: [
+         { find: '@', replacement: path.resolve(__dirname, 'src') },
          { find: '@components', replacement: path.resolve(__dirname, 'src/components') },
          { find: '@pages', replacement: path.resolve(__dirname, 'src/pages') },
          { find: '@assets', replacement: path.resolve(__dirname, 'src/assets') },
       ],
    },
    server: {
-      open: true, // 개발 서버 시작 시 브라우저 자동으로 열기
+      open: true,
    },
 })
