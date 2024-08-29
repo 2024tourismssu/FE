@@ -9,8 +9,8 @@ import Button from '@mui/material/Button'
 import SearchIcon from '@mui/icons-material/Search'
 import { styled } from '@mui/material/styles'
 import InputBase from '@mui/material/InputBase'
-import ImageComponent from './Image.tsx'
-import Logo from '../assets/images/Logo.png'
+import ImageComponent from '../Image.tsx'
+import Logo from '../../assets/images/Logo_v2.png'
 import IconButton from '@mui/material/IconButton'
 import MenuIcon from '@mui/icons-material/Menu'
 import Menu from '@mui/material/Menu'
@@ -19,8 +19,7 @@ import { useNavigate } from 'react-router-dom'
 
 const pages = [
    { label: '축제', path: '/festival' },
-   { label: '공연', path: '/concert' },
-   { label: '행사', path: '/event' },
+   { label: '공연/행사', path: '/concert' },
    { label: '문화시설', path: '/facility' },
    { label: '팝업 스토어', path: '/popup' },
 ]
@@ -28,12 +27,12 @@ const pages = [
 const Search = styled('div')(({ theme }) => ({
    position: 'relative',
    borderRadius: theme.shape.borderRadius,
-   backgroundColor: '#E3DFDF',
+   backgroundColor: 'rgba(98, 180, 134, 0.23)',
    marginLeft: '1rem',
    marginRight: '1rem',
-   width: '50%',
+   width: '40%',
    [theme.breakpoints.up('md')]: {
-      width: '30%',
+      width: '25%',
    },
 }))
 
@@ -81,16 +80,20 @@ function Header() {
    }
 
    return (
-      <AppBar sx={{ backgroundColor: 'white', color: 'black', border: '1px solid black' }}>
+      <AppBar
+         sx={{
+            backgroundColor: 'white',
+            color: 'black',
+            border: '1px solid black',
+            height: '10%',
+            display: 'flex',
+            justifyContent: 'center',
+         }}
+      >
          <Container maxWidth={false} sx={{ width: '70%' }}>
             <Toolbar disableGutters>
-               <ImageComponent
-                  src={Logo}
-                  sx={{ width: '100px', height: '50px', cursor: 'pointer' }} // cursor: pointer로 마우스 오버 시 손 모양 아이콘 표시
-                  onClick={() => handleNavigation('/')}
-               />
-
-               <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+               <ImageComponent src={Logo} sx={{ width: '100px', height: '50px', cursor: 'pointer' }} onClick={() => handleNavigation('/')} />
+               <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex', marginLeft: '1rem' } }}>
                   {pages.map((page, index) => (
                      <React.Fragment key={page.label}>
                         <Button
@@ -99,24 +102,25 @@ function Header() {
                               my: 2,
                               color: 'black',
                               display: 'block',
-                              margin: 1,
+                              margin: 1.3,
                               padding: 1,
-                              border: 'solid 1px black',
+                              width: page.label === '팝업 스토어' ? '120px' : '90px',
+                              height: '45px',
+                              backgroundColor: 'rgba(98, 180, 134, 0.23)',
                            }}
                         >
                            {page.label}
                         </Button>
-                        {index === 3 && (
-                           <Typography
+                        {index === 2 && (
+                           <Box
                               sx={{
-                                 color: 'black',
-                                 display: 'flex',
-                                 alignItems: 'center',
-                                 padding: '0 8px',
+                                 width: '2px',
+                                 height: '35px',
+                                 backgroundColor: '#1E781E',
+                                 margin: '0 8px',
+                                 alignSelf: 'center',
                               }}
-                           >
-                              |
-                           </Typography>
+                           />
                         )}
                      </React.Fragment>
                   ))}
