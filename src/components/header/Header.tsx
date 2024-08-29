@@ -101,6 +101,7 @@ function Header() {
                            sx={{
                               my: 2,
                               color: 'black',
+                              fontWeight: 600,
                               display: 'block',
                               margin: 1.3,
                               padding: 1,
