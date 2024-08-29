@@ -1,9 +1,9 @@
-import Header from '../../components/header/Header.tsx'
+import Header from '@components/header/Header.tsx'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import styles from './styles/HomePage.module.scss'
-import ActionAreaCard from '../../components/Card.tsx'
-import cafe1 from '../../assets/images/cafe1.jpg'
+import ActionAreaCard from '@components/Card.tsx'
+import cafe1 from '@assets/images/cafe1.jpg'
 
 const HomePage = () => {
    return (
