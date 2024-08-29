@@ -3,23 +3,43 @@ import Header from '@components/header/Header.tsx'
 import Box from '@mui/material/Box'
 import CustomCalendar from '@components/calendar/Calendar.tsx'
 import CalendarButton from '@components/iconButton/CalendarButton.tsx'
-import styles from './styles/FestivalPage.module.scss'
 import Weather from '@components/weather/Weather.tsx'
+import PreviewColCard from '@components/card/PreviewColCard.tsx'
+import styles from './styles/FestivalPage.module.scss'
 import Festival from '@components/festival/Festival.tsx'
+
+interface FestivalItem {
+   title: string
+   place: string
+   startDate: string
+   endDate: string
+   image?: string
+   altText?: string
+}
 
 const FestivalPage = () => {
    const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 768)
-   const [isCalendarVisible, setIsCalendarVisible] = useState<boolean>(false) // CustomCalendar의 가시성 상태
+   const [isCalendarVisible, setIsCalendarVisible] = useState<boolean>(false)
+   const [festivalData, setFestivalData] = useState<FestivalItem[]>([])
 
    const handleResize = () => {
       setIsMobile(window.innerWidth <= 768)
    }
 
    const toggleCalendarVisibility = () => {
-      setIsCalendarVisible((prev) => !prev) // 가시성 상태를 토글
+      setIsCalendarVisible((prev) => !prev)
+   }
+   const fetchFestivalData = async () => {
+      try {
+         const data = await Festival()
+         setFestivalData(data)
+      } catch (error) {
+         console.error('Error fetching festival data:', error)
+      }
    }
 
    useEffect(() => {
+      fetchFestivalData()
       window.addEventListener('resize', handleResize)
       return () => {
          window.removeEventListener('resize', handleResize)
@@ -39,10 +59,16 @@ const FestivalPage = () => {
                </>
             )}
             {!isMobile && (
-               <Box>
-                  <CustomCalendar />
-                  <Weather regId={'11B00000'} tmFc={'20240825'} />
-                  <Festival />
+               <Box className={styles.contentContainer}>
+                  <Box className={styles.cardContainer}>
+                     {festivalData.map((item, index) => (
+                        <PreviewColCard key={index} title={item.title} place={item.place} startDate={item.startDate} endDate={item.endDate} image={item.image} altText={item.altText} />
+                     ))}
+                  </Box>
+                  <Box>
+                     <CustomCalendar />
+                     <Weather regId={'11B00000'} tmFc={'20240825'} />
+                  </Box>
                </Box>
             )}
          </Box>
