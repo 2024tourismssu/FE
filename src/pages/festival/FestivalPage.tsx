@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
-import Header from '../../components/header/Header.tsx'
+import Header from '@components/header/Header.tsx'
 import Box from '@mui/material/Box'
-import CustomCalendar from '../../components/calendar/Calendar.tsx'
-import CalendarButton from '../../components/iconButton/CalendarButton.tsx'
+import CustomCalendar from '@components/calendar/Calendar.tsx'
+import CalendarButton from '@components/iconButton/CalendarButton.tsx'
 import styles from './styles/FestivalPage.module.scss'
 
 const FestivalPage = () => {
