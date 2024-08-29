@@ -1,4 +1,4 @@
-import Header from '../../components/Header.tsx'
+import Header from '../../components/header/Header.tsx'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import styles from './styles/HomePage.module.scss'
