@@ -1,4 +1,4 @@
-import Header from '../../components/Header.tsx'
+import Header from '../../components/header/Header.tsx'
 import Box from '@mui/material/Box'
 
 const EventPage = () => {
