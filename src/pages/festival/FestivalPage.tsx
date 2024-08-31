@@ -18,6 +18,13 @@ interface FestivalItem {
    altText?: string
 }
 
+const getCurrentDate = () => {
+   const today = new Date()
+   const year = today.getFullYear()
+   const month = String(today.getMonth() + 1).padStart(2, '0') // 월을 2자리로 변환
+   const day = String(today.getDate()).padStart(2, '0') // 일을 2자리로 변환
+   return `${year}${month}${day}` // YYYYMMDD 형식의 문자열 반환
+}
 const FestivalPage = () => {
    const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 768)
    const [isCalendarVisible, setIsCalendarVisible] = useState<boolean>(false)
@@ -33,14 +40,14 @@ const FestivalPage = () => {
    }
 
    const fetchFestivalData = async () => {
-      setLoading(true) // Start loading
+      setLoading(true)
       try {
          const data = await Festival()
          setFestivalData(data)
       } catch (error) {
          console.error('Error fetching festival data:', error)
       } finally {
-         setLoading(false) // Stop loading
+         setLoading(false)
       }
    }
 
@@ -75,7 +82,7 @@ const FestivalPage = () => {
                   </Box>
                   <Box>
                      <CustomCalendar />
-                     <Weather regId={'11B00000'} tmFc={'20240825'} />
+                     <Weather regId={'11B00000'} tmFc={getCurrentDate()} />
                   </Box>
                </Box>
             )}
