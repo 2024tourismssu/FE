@@ -19,19 +19,18 @@ interface FestivalItem {
    altText?: string
 }
 
-// 주요 도시와 해당하는 regId를 정의합니다.
 const cityRegIds = {
    서울: '11B00000',
    대구: '11H10701',
    부산: '11H20201',
-   인천: '11B20201',
+   인천: '11D10000',
    광주: '11F20501',
    대전: '11C20401',
    울산: '11H20101',
    제주: '11G00201',
 } as const
 
-type City = keyof typeof cityRegIds // cityRegIds의 키들을 타입으로 정의
+type City = keyof typeof cityRegIds
 
 const getCurrentDate = () => {
    const today = new Date()

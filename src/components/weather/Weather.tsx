@@ -47,7 +47,7 @@ const Weather = ({ regId, tmFc }: WeatherProps) => {
             },
             responseType: 'json',
          })
-
+         console.log(response)
          const items = response.data.response.body.items.item[0]
 
          const weatherList: WeatherData[] = [
@@ -88,7 +88,8 @@ const Weather = ({ regId, tmFc }: WeatherProps) => {
 
    useEffect(() => {
       fetchWeatherData()
-   }, [])
+      console.log(regId)
+   }, [regId, tmFc])
 
    return (
       <Box sx={{ padding: 2 }}>
@@ -109,7 +110,6 @@ const Weather = ({ regId, tmFc }: WeatherProps) => {
                         width: 320,
                         display: 'flex',
                         alignItems: 'center',
-
                         margin: 0.2,
                         padding: 1,
                         border: '1px solid #ddd',
