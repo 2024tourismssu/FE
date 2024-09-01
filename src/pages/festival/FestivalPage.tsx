@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react'
 import Header from '@components/header/Header.tsx'
 import Box from '@mui/material/Box'
-import { Skeleton } from '@mui/material'
+import { FormControl, InputLabel, MenuItem, Select, Skeleton } from '@mui/material'
 import CustomCalendar from '@components/calendar/Calendar.tsx'
 import CalendarButton from '@components/iconButton/CalendarButton.tsx'
 import Weather from '@components/weather/Weather.tsx'
 import PreviewColCard from '@components/card/PreviewColCard.tsx'
 import styles from './styles/FestivalPage.module.scss'
 import Festival from '@components/festival/Festival.tsx'
+import Typography from '@mui/material/Typography'
 
 interface FestivalItem {
    title: string
@@ -18,18 +19,34 @@ interface FestivalItem {
    altText?: string
 }
 
+// 주요 도시와 해당하는 regId를 정의합니다.
+const cityRegIds = {
+   서울: '11B00000',
+   대구: '11H10701',
+   부산: '11H20201',
+   인천: '11B20201',
+   광주: '11F20501',
+   대전: '11C20401',
+   울산: '11H20101',
+   제주: '11G00201',
+} as const
+
+type City = keyof typeof cityRegIds // cityRegIds의 키들을 타입으로 정의
+
 const getCurrentDate = () => {
    const today = new Date()
    const year = today.getFullYear()
-   const month = String(today.getMonth() + 1).padStart(2, '0') // 월을 2자리로 변환
-   const day = String(today.getDate()).padStart(2, '0') // 일을 2자리로 변환
-   return `${year}${month}${day}` // YYYYMMDD 형식의 문자열 반환
+   const month = String(today.getMonth() + 1).padStart(2, '0')
+   const day = String(today.getDate()).padStart(2, '0')
+   return `${year}${month}${day}`
 }
+
 const FestivalPage = () => {
    const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 768)
    const [isCalendarVisible, setIsCalendarVisible] = useState<boolean>(false)
    const [festivalData, setFestivalData] = useState<FestivalItem[]>([])
-   const [loading, setLoading] = useState<boolean>(true) // Loading state
+   const [loading, setLoading] = useState<boolean>(true)
+   const [selectedCity, setSelectedCity] = useState<City>('서울') // 기본값: 서울로 설정, 타입은 City
 
    const handleResize = () => {
       setIsMobile(window.innerWidth <= 768)
@@ -82,7 +99,27 @@ const FestivalPage = () => {
                   </Box>
                   <Box>
                      <CustomCalendar />
-                     <Weather regId={'11B00000'} tmFc={getCurrentDate()} />
+                     <Box className={styles.titleContainer}>
+                        <Typography variant="h6" sx={{ marginBottom: 2 }}>
+                           주간 날씨 예보
+                        </Typography>
+                        <FormControl fullWidth sx={{ marginBottom: 2, width: 100 }}>
+                           <InputLabel id="city-select-label">도시 선택</InputLabel>
+                           <Select
+                              labelId="city-select-label"
+                              value={selectedCity}
+                              label="도시 선택"
+                              onChange={(e) => setSelectedCity(e.target.value as City)} // 타입캐스팅을 통해 타입 안정성 보장
+                           >
+                              {Object.keys(cityRegIds).map((city) => (
+                                 <MenuItem key={city} value={city}>
+                                    {city}
+                                 </MenuItem>
+                              ))}
+                           </Select>
+                        </FormControl>
+                     </Box>
+                     <Weather regId={cityRegIds[selectedCity]} tmFc={getCurrentDate()} />
                   </Box>
                </Box>
             )}

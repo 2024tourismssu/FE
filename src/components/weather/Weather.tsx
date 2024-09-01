@@ -92,9 +92,6 @@ const Weather = ({ regId, tmFc }: WeatherProps) => {
 
    return (
       <Box sx={{ padding: 2 }}>
-         <Typography variant="h6" sx={{ marginBottom: 2 }}>
-            주간 날씨 예보
-         </Typography>
          {loading ? (
             <Grid container spacing={1}>
                {Array.from(new Array(7)).map((_, index) => (
