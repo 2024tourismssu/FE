@@ -3,6 +3,7 @@ import CardContent from '@mui/material/CardContent'
 import CardMedia from '@mui/material/CardMedia'
 import Typography from '@mui/material/Typography'
 import { CardActionArea } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
 
 interface PreviewColCardProps {
    title: string
@@ -17,10 +18,12 @@ interface PreviewColCardProps {
 }
 
 const PreviewColCard = ({ title, place, startDate, endDate, image, altText, onClick, contentId, contentTypeId }: PreviewColCardProps) => {
+   const navigate = useNavigate()
+
    const handleClick = () => {
       console.log(contentId)
       console.log(contentTypeId)
-
+      navigate(`/festival/${contentId}`)
       if (onClick) {
          onClick(contentId, contentTypeId)
       }
