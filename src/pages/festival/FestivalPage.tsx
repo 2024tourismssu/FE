@@ -17,6 +17,8 @@ interface FestivalItem {
    endDate: string
    image?: string
    altText?: string
+   contentId?: string
+   contentTypeId?: string
 }
 
 const cityRegIds = {
@@ -94,7 +96,17 @@ const FestivalPage = () => {
                      {loading
                         ? Array.from(new Array(3)).map((_, index) => <Skeleton key={index} variant="rectangular" width={700} height={340} sx={{ marginBottom: 2 }} />)
                         : festivalData.map((item, index) => (
-                             <PreviewColCard key={index} title={item.title} place={item.place} startDate={item.startDate} endDate={item.endDate} image={item.image} altText={item.altText} />
+                             <PreviewColCard
+                                key={index}
+                                title={item.title}
+                                place={item.place}
+                                startDate={item.startDate}
+                                endDate={item.endDate}
+                                image={item.image}
+                                altText={item.altText}
+                                contentId={item.contentId}
+                                contentTypeId={item.contentTypeId}
+                             />
                           ))}
                   </Box>
                   <Box>

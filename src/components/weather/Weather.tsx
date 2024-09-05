@@ -47,7 +47,7 @@ const Weather = ({ regId, tmFc }: WeatherProps) => {
             },
             responseType: 'json',
          })
-         console.log(response)
+         // console.log(response)
          const items = response.data.response.body.items.item[0]
 
          const weatherList: WeatherData[] = [

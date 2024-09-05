@@ -11,11 +11,23 @@ interface PreviewColCardProps {
    endDate?: string
    image?: string
    altText?: string
+   onClick?: (contentId?: string, contentTypeId?: string) => void
+   contentId?: string
+   contentTypeId?: string
 }
 
-const PreviewColCard = ({ title, place, startDate, endDate, image, altText }: PreviewColCardProps) => {
+const PreviewColCard = ({ title, place, startDate, endDate, image, altText, onClick, contentId, contentTypeId }: PreviewColCardProps) => {
+   const handleClick = () => {
+      console.log(contentId)
+      console.log(contentTypeId)
+
+      if (onClick) {
+         onClick(contentId, contentTypeId)
+      }
+   }
+
    return (
-      <Card sx={{ display: 'flex', width: 700, margin: 2 }}>
+      <Card sx={{ display: 'flex', width: 700, margin: 2 }} onClick={handleClick}>
          <CardMedia component="img" sx={{ width: 250, height: 340 }} image={image} alt={altText} />
          <CardActionArea sx={{ flex: 1, display: 'flex', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
             <CardContent sx={{ padding: '8px', paddingBottom: '0 !important', marginLeft: '8px' }}>
