@@ -4,7 +4,7 @@ import FacilityPage from '@pages/facility/FacilityPage.tsx'
 import FestivalPage from '@pages/festival/FestivalPage.tsx'
 import ConcertPage from '@pages/concert/ConcertPage.tsx'
 import PopupPage from '@pages/popup/PopupPage.tsx'
-import { FestivalDetailPage } from '@pages/festivalDetail/FestivalDetailPage.tsx'
+import FestivalDetailPage from '@pages/festivalDetail/FestivalDetailPage.tsx'
 
 export const AppRouter = () => {
    return (
