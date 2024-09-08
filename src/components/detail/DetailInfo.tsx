@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import Box from '@mui/material/Box'
 import axios from 'axios'
 import { useContentStore } from '@/stores/contentStore.ts'
@@ -6,14 +6,12 @@ import { useContentStore } from '@/stores/contentStore.ts'
 const DetailInfo = () => {
    const { contentId, contentTypeId } = useContentStore()
 
-   const [loading, setLoading] = useState<boolean>(true)
    const apiKey = import.meta.env.VITE_API_KEY
    const url = 'http://apis.data.go.kr/B551011/KorService1/detailCommon1'
 
    useEffect(() => {
       const fetchData = async () => {
          try {
-            console.log(contentId)
             const response = await axios.get(url, {
                params: {
                   MobileOS: 'ETC',
@@ -43,17 +41,13 @@ const DetailInfo = () => {
             }
          } catch (error) {
             console.error(error)
-         } finally {
-            setLoading(false)
          }
       }
 
       fetchData()
    }, [contentId, contentTypeId, apiKey])
 
-   if (loading) {
-      return <Box>Loading...</Box>
-   }
+   return <Box>Loading...</Box>
 }
 
 export default DetailInfo
