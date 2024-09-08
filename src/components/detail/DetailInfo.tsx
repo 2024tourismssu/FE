@@ -37,7 +37,7 @@ const DetailInfo = () => {
 
             if (response.status === 200) {
                const item = response.data.response.body.items.item[0]
-               console.log(item)
+            
                setMapCoords(item.mapy, item.mapx)
             }
          } catch (error) {
