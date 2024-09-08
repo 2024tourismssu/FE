@@ -11,7 +11,7 @@ interface ActionAreaCardProps {
    altText?: string
 }
 
-const ActionAreaCard = ({ title, content, image, altText }: ActionAreaCardProps) => {
+const PreviewRowCard = ({ title, content, image, altText }: ActionAreaCardProps) => {
    return (
       <Card sx={{ maxWidth: 345 }}>
          <CardActionArea>
@@ -28,4 +28,4 @@ const ActionAreaCard = ({ title, content, image, altText }: ActionAreaCardProps)
       </Card>
    )
 }
-export default ActionAreaCard
+export default PreviewRowCard

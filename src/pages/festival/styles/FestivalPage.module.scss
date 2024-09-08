@@ -15,7 +15,7 @@
   z-index: 999;
   background-color: white;
   border-radius: 8px;
- 
+
 }
 
 .buttonContainer {
@@ -24,3 +24,20 @@
   right: 16px;
   z-index: 1000;
 }
+
+.titleContainer {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.contentContainer {
+  display: flex;
+
+
+  .cardContainer {
+
+  }
+}
+
