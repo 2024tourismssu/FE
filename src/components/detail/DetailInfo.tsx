@@ -4,7 +4,7 @@ import axios from 'axios'
 import { useContentStore } from '@/stores/contentStore.ts'
 
 const DetailInfo = () => {
-   const { contentId, contentTypeId } = useContentStore()
+   const { contentId, contentTypeId, setMapCoords } = useContentStore()
 
    const apiKey = import.meta.env.VITE_API_KEY
    const url = 'http://apis.data.go.kr/B551011/KorService1/detailCommon1'
@@ -38,6 +38,7 @@ const DetailInfo = () => {
             if (response.status === 200) {
                const item = response.data.response.body.items.item[0]
                console.log(item)
+               setMapCoords(item.mapy, item.mapx)
             }
          } catch (error) {
             console.error(error)

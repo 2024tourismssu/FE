@@ -1,6 +1,11 @@
 import { Map } from 'react-kakao-maps-sdk'
+import { useContentStore } from '@/stores/contentStore.ts'
 
 const KakaoMap = () => {
-   return <Map center={{ lat: 33.450701, lng: 126.570667 }} style={{ width: '1000px', height: '600px' }} level={3} />
+   const { mapX, mapY } = useContentStore()
+   if (!mapX || !mapY) {
+      return <div>지도를 로드할 수 없습니다.</div>
+   }
+   return <Map center={{ lat: parseFloat(mapX), lng: parseFloat(mapY) }} style={{ width: '500px', height: '300px' }} level={3} />
 }
 export default KakaoMap
