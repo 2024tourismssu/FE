@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography'
 import { CardActionArea } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import { useContentStore } from '@/stores/contentStore.ts'
+import styles from './styles/PreviewColCard.module.scss'
 
 interface PreviewColCardProps {
    title: string
@@ -29,7 +30,7 @@ const PreviewColCard = ({ title, place, startDate, endDate, image, altText, cont
    }
 
    return (
-      <Card sx={{ display: 'flex', width: 700, margin: 2 }} onClick={handleClick}>
+      <Card sx={{ display: 'flex', width: 700, margin: 2, marginRight: 5 }} className={styles.previewColCard} onClick={handleClick}>
          <CardMedia component="img" sx={{ width: 250, height: 340 }} image={image} alt={altText} />
          <CardActionArea sx={{ flex: 1, display: 'flex', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
             <CardContent sx={{ padding: '8px', paddingBottom: '0 !important', marginLeft: '8px' }}>
