@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const Festival = async () => {
+const Festival = async (eventStartDate: string) => {
    const apiKey = import.meta.env.VITE_API_KEY
    const url = 'http://apis.data.go.kr/B551011/KorService1/searchFestival1'
 
@@ -14,7 +14,7 @@ const Festival = async () => {
             _type: 'json',
             listYN: 'Y',
             arrange: 'A',
-            eventStartDate: '20240905',
+            eventStartDate: eventStartDate, // eventStartDate 값을 사용
             serviceKey: apiKey,
          },
          headers: {
@@ -25,7 +25,6 @@ const Festival = async () => {
 
       if (response.status === 200) {
          const items = response.data.response.body.items.item
-         // console.log(items)
          return items
             .filter((item: any) => item.cat3 === 'A02070100' || item.cat3 === 'A02070200')
             .map((item: any) => ({

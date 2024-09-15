@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useDateStore } from '@/stores/dateStore.ts'
 import Header from '@components/header/Header.tsx'
 import Box from '@mui/material/Box'
 import { FormControl, InputLabel, MenuItem, Select, Skeleton } from '@mui/material'
@@ -43,12 +44,20 @@ const getCurrentDate = () => {
    return `${year}${month}${day}`
 }
 
+const formatDateToYYYYMMDD = (date: Date): string => {
+   const year = date.getFullYear()
+   const month = String(date.getMonth() + 1).padStart(2, '0')
+   const day = String(date.getDate()).padStart(2, '0')
+   return `${year}${month}${day}`
+}
+
 const FestivalPage = () => {
    const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 768)
    const [isCalendarVisible, setIsCalendarVisible] = useState<boolean>(false)
    const [festivalData, setFestivalData] = useState<FestivalItem[]>([])
    const [loading, setLoading] = useState<boolean>(true)
    const [selectedCity, setSelectedCity] = useState<City>('서울') // 기본값: 서울로 설정, 타입은 City
+   const { startDate: zustandStartDate } = useDateStore() // Zustand에서 startDate 가져오기
 
    const handleResize = () => {
       setIsMobile(window.innerWidth <= 768)
@@ -58,10 +67,10 @@ const FestivalPage = () => {
       setIsCalendarVisible((prev) => !prev)
    }
 
-   const fetchFestivalData = async () => {
+   const fetchFestivalData = async (eventStartDate: string) => {
       setLoading(true)
       try {
-         const data = await Festival()
+         const data = await Festival(eventStartDate)
          setFestivalData(data)
       } catch (error) {
          console.error('Error fetching festival data:', error)
@@ -71,12 +80,18 @@ const FestivalPage = () => {
    }
 
    useEffect(() => {
-      fetchFestivalData()
+      const today = new Date()
+      const formattedToday = formatDateToYYYYMMDD(today)
+
+      const eventStartDate = zustandStartDate ? formatDateToYYYYMMDD(new Date(zustandStartDate)) : formattedToday
+
+      fetchFestivalData(eventStartDate)
+
       window.addEventListener('resize', handleResize)
       return () => {
          window.removeEventListener('resize', handleResize)
       }
-   }, [])
+   }, [zustandStartDate]) // 선택된 날짜가 변경될 때마다 호출
 
    return (
       <Box>
