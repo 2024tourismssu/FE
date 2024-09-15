@@ -1,0 +1,43 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  margin-top: 8rem;
+
+}
+
+.calendarWrapper {
+  position: fixed;
+  bottom: 72px;
+  right: 16px;
+  z-index: 999;
+  background-color: white;
+  border-radius: 8px;
+
+}
+
+.buttonContainer {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  z-index: 1000;
+}
+
+.titleContainer {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.contentContainer {
+  display: flex;
+
+
+  .cardContainer {
+
+  }
+}
+
