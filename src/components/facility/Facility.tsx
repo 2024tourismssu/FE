@@ -1,4 +1,5 @@
 import axios from 'axios'
+import empty from '@assets/images/empty.jpg'
 
 const Facility = async (areaCode: number) => {
    const apiKey = import.meta.env.VITE_API_KEY
@@ -37,7 +38,7 @@ const Facility = async (areaCode: number) => {
                place: item.addr1 + (item.addr2 || ''),
                startDate: item.eventstartdate,
                endDate: item.eventenddate,
-               image: item.firstimage,
+               image: item.firstimage || empty,
                contentId: item.contentid,
                contentTypeId: item.contenttypeid,
             }))

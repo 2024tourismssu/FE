@@ -1,4 +1,5 @@
 import axios from 'axios'
+import empty from '@assets/images/empty.jpg'
 
 const Festival = async (eventStartDate: string) => {
    const apiKey = import.meta.env.VITE_API_KEY
@@ -32,7 +33,7 @@ const Festival = async (eventStartDate: string) => {
                place: item.addr1 + (item.addr2 || ''),
                startDate: item.eventstartdate,
                endDate: item.eventenddate,
-               image: item.firstimage,
+               image: item.firstimage || empty,
                contentId: item.contentid,
                contentTypeId: item.contenttypeid,
             }))
