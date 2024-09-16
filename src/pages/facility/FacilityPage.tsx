@@ -24,14 +24,25 @@ interface FestivalItem {
 
 const cityRegIds = {
    서울: '11B00000',
-   대구: '11H10000',
-   부산: '11H20000',
    인천: '11B00000',
-   경기도: '11B00000',
-   광주: '11F20000',
    대전: '11C20000',
+   대구: '11H10000',
+   광주: '11F20000',
+   부산: '11H20000',
    울산: '11H20000',
    제주: '11G00000',
+} as const
+
+const cityAreaCodes = {
+   서울: 1,
+   인천: 2,
+   대전: 3,
+   대구: 4,
+   광주: 5,
+   부산: 6,
+   울산: 7,
+   세종: 8,
+   제주: 9,
 } as const
 
 type City = keyof typeof cityRegIds
@@ -56,7 +67,7 @@ const FacilityPage = () => {
    const [isCalendarVisible, setIsCalendarVisible] = useState<boolean>(false)
    const [festivalData, setFestivalData] = useState<FestivalItem[]>([])
    const [loading, setLoading] = useState<boolean>(true)
-   const [selectedCity, setSelectedCity] = useState<City>('서울') // 기본값: 서울로 설정, 타입은 City
+   const [selectedCity, setSelectedCity] = useState<City>('서울') // 기본값: 서울
    const { startDate: zustandStartDate } = useDateStore() // Zustand에서 startDate 가져오기
 
    const handleResize = () => {
@@ -67,11 +78,11 @@ const FacilityPage = () => {
       setIsCalendarVisible((prev) => !prev)
    }
 
-   const fetchFacilityData = async (eventStartDate: string) => {
+   const fetchFacilityData = async (eventStartDate: string, areaCode: number) => {
       setLoading(true)
       try {
-         console.log(eventStartDate)
-         const data = await Facility()
+         console.log(`Fetching data for area code: ${areaCode}, start date: ${eventStartDate}`)
+         const data = await Facility(areaCode) // Pass the area code to the Facility function
          setFestivalData(data)
       } catch (error) {
          console.error('Error fetching festival data:', error)
@@ -86,13 +97,16 @@ const FacilityPage = () => {
 
       const eventStartDate = zustandStartDate ? formatDateToYYYYMMDD(new Date(zustandStartDate)) : formattedToday
 
-      fetchFacilityData(eventStartDate)
+      // Get the area code based on the selected city
+      const areaCode = cityAreaCodes[selectedCity]
+
+      fetchFacilityData(eventStartDate, areaCode)
 
       window.addEventListener('resize', handleResize)
       return () => {
          window.removeEventListener('resize', handleResize)
       }
-   }, [zustandStartDate]) // 선택된 날짜가 변경될 때마다 호출
+   }, [zustandStartDate, selectedCity]) // 선택된 날짜와 도시가 변경될 때마다 호출
 
    return (
       <Box>
@@ -126,7 +140,6 @@ const FacilityPage = () => {
                           ))}
                   </Box>
                   <Box>
-                     <CustomCalendar />
                      <Box className={styles.titleContainer}>
                         <Typography variant="h6" sx={{ marginBottom: 2 }}>
                            주간 날씨 예보

@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const Facility = async () => {
+const Facility = async (areaCode: number) => {
    const apiKey = import.meta.env.VITE_API_KEY
    const url = 'http://apis.data.go.kr/B551011/KorService1/areaBasedSyncList1'
 
@@ -15,8 +15,7 @@ const Facility = async () => {
             listYN: 'Y',
             arrange: 'A',
             contentTypeId: 14,
-            areaCode: 6,
-            sigunguCode: 4,
+            areaCode: areaCode,
             serviceKey: apiKey,
          },
          headers: {
