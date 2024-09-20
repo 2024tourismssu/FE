@@ -1,15 +1,14 @@
 import Box from '@mui/material/Box'
 import Header from '@components/header/Header.tsx'
 import DetailInfo from '@components/detail/DetailInfo.tsx'
-import KakaoMap from '@components/map/KakaoMap.tsx'
+import styles from '@pages/festival/styles/FestivalPage.module.scss'
 
 const FestivalDetailPage = () => {
    return (
       <Box>
          <Header />
-         <Box>
+         <Box className={styles.container}>
             <DetailInfo />
-            <KakaoMap />
          </Box>
       </Box>
    )
