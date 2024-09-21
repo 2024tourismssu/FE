@@ -24,10 +24,7 @@ const DetailInfo = () => {
    const url = 'http://apis.data.go.kr/B551011/KorService1/detailCommon1'
 
    const textLimit = 150
-   const createLinkHTML = (homepage: string): string => {
-      const displayText = homepage.replace(/(^\w+:|^)\/\//, '')
-      return `<a href="${homepage}" target="_blank" rel="noopener noreferrer">${displayText}</a>`
-   }
+
    useEffect(() => {
       const fetchData = async () => {
          try {
@@ -56,6 +53,7 @@ const DetailInfo = () => {
 
             if (response.status === 200) {
                const fetchedItem = response.data.response.body.items.item[0]
+
                setItem(fetchedItem)
                setMapCoords(fetchedItem.mapy, fetchedItem.mapx)
             }
@@ -66,6 +64,14 @@ const DetailInfo = () => {
 
       fetchData()
    }, [contentId, contentTypeId, apiKey, setMapCoords])
+
+   // HTML 태그를 제거하고 실제 URL만 추출하는 함수
+   const extractURL = (htmlString: string) => {
+      const tempDiv = document.createElement('div')
+      tempDiv.innerHTML = htmlString
+      const anchor = tempDiv.querySelector('a')
+      return anchor ? anchor.href : htmlString // 링크가 없으면 원본 문자열 반환
+   }
 
    return (
       <Box className={styles.Container}>
@@ -88,14 +94,15 @@ const DetailInfo = () => {
             <KakaoMap />
          </Card>
          <Card className={styles.SubContent}>
-            {item?.homepage && (
-               <Typography
-                  dangerouslySetInnerHTML={{
-                     __html: createLinkHTML(item.homepage),
-                  }}
-               />
-            )}
-            <Typography>{item?.tel}</Typography>
+            <Typography component="div">
+               홈페이지 링크 :{' '}
+               {item?.homepage && (
+                  <a href={extractURL(item.homepage)} target="_blank" rel="noopener noreferrer">
+                     {extractURL(item.homepage)}
+                  </a>
+               )}
+            </Typography>
+            <Typography>전화 번호 : {item?.tel}</Typography>
          </Card>
       </Box>
    )
