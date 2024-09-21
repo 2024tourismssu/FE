@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography'
 import Card from '@mui/material/Card'
 import PhoneIcon from '@mui/icons-material/Phone'
 import LinkIcon from '@mui/icons-material/Link'
+import Button from '@mui/material/Button'
 import styles from './style/DetailInfo.module.scss'
 
 interface DetailProps {
@@ -24,9 +25,9 @@ const DetailInfo = () => {
    const [isShowMore, setIsShowMore] = useState<boolean>(false)
    const apiKey = import.meta.env.VITE_API_KEY
    const url = 'http://apis.data.go.kr/B551011/KorService1/detailCommon1'
-
+   const { mapX, mapY } = useContentStore()
    const textLimit = 250
-
+   console.log(mapX, mapY)
    useEffect(() => {
       const fetchData = async () => {
          try {
@@ -73,6 +74,10 @@ const DetailInfo = () => {
       tempDiv.innerHTML = htmlString
       const anchor = tempDiv.querySelector('a')
       return anchor ? anchor.href : htmlString // 링크가 없으면 원본 문자열 반환
+   }
+   const openRoadView = () => {
+      const roadViewUrl = `https://map.kakao.com/link/roadview/${mapY},${mapX}`
+      window.open(roadViewUrl, '_blank') // 새 탭에서 링크 열기
    }
 
    return (
@@ -126,6 +131,9 @@ const DetailInfo = () => {
                />
                전화 번호 : {item?.tel ? item.tel : '번호가 없습니다'}
             </Typography>
+            <Button variant="contained" color="primary" onClick={openRoadView} style={{ marginTop: '10px' }}>
+               길찾기
+            </Button>
          </Card>
       </Box>
    )
