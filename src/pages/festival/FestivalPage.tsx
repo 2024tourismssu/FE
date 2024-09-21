@@ -10,6 +10,7 @@ import PreviewColCard from '@components/card/PreviewColCard.tsx'
 import styles from './styles/FestivalPage.module.scss'
 import Festival from '@components/festival/Festival.tsx'
 import Typography from '@mui/material/Typography'
+import PreviewRowCard from '@components/card/PreviewRowCard.tsx'
 
 interface FestivalItem {
    title: string
@@ -99,6 +100,23 @@ const FestivalPage = () => {
          <Box className={styles.container}>
             {isMobile && (
                <>
+                  <Box>
+                     {loading
+                        ? Array.from(new Array(3)).map((_, index) => <Skeleton key={index} variant="rectangular" width={700} height={340} sx={{ marginBottom: 2 }} />)
+                        : festivalData.map((item, index) => (
+                             <PreviewRowCard
+                                key={index}
+                                title={item.title}
+                                place={item.place}
+                                startDate={item.startDate}
+                                endDate={item.endDate}
+                                image={item.image}
+                                altText={item.altText}
+                                contentId={item.contentId}
+                                contentTypeId={item.contentTypeId}
+                             />
+                          ))}
+                  </Box>
                   {isCalendarVisible && <CustomCalendar />}
                   <Box className={styles.calendarWrapper}>
                      <CalendarButton onClick={toggleCalendarVisibility} />
