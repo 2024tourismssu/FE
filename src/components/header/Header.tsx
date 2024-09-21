@@ -84,15 +84,15 @@ function Header() {
          sx={{
             backgroundColor: 'white',
             color: 'black',
-            border: '1px solid black',
-            height: '10%',
+
+            height: '13%',
             display: 'flex',
             justifyContent: 'center',
          }}
       >
          <Container maxWidth={false} sx={{ width: '70%' }}>
             <Toolbar disableGutters>
-               <ImageComponent src={Logo} sx={{ width: '100px', height: '50px', cursor: 'pointer' }} onClick={() => handleNavigation('/')} />
+               <ImageComponent src={Logo} sx={{ width: '150px', height: '75px', cursor: 'pointer' }} onClick={() => handleNavigation('/')} />
                <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex', marginLeft: '1rem' } }}>
                   {pages.map((page, index) => (
                      <React.Fragment key={page.label}>

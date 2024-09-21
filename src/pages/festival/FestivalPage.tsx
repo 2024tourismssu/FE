@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useDateStore } from '@/stores/dateStore.ts'
 import Header from '@components/header/Header.tsx'
 import Box from '@mui/material/Box'
 import { FormControl, InputLabel, MenuItem, Select, Skeleton } from '@mui/material'
@@ -9,6 +10,7 @@ import PreviewColCard from '@components/card/PreviewColCard.tsx'
 import styles from './styles/FestivalPage.module.scss'
 import Festival from '@components/festival/Festival.tsx'
 import Typography from '@mui/material/Typography'
+import PreviewRowCard from '@components/card/PreviewRowCard.tsx'
 
 interface FestivalItem {
    title: string
@@ -43,12 +45,20 @@ const getCurrentDate = () => {
    return `${year}${month}${day}`
 }
 
+const formatDateToYYYYMMDD = (date: Date): string => {
+   const year = date.getFullYear()
+   const month = String(date.getMonth() + 1).padStart(2, '0')
+   const day = String(date.getDate()).padStart(2, '0')
+   return `${year}${month}${day}`
+}
+
 const FestivalPage = () => {
    const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 768)
    const [isCalendarVisible, setIsCalendarVisible] = useState<boolean>(false)
    const [festivalData, setFestivalData] = useState<FestivalItem[]>([])
    const [loading, setLoading] = useState<boolean>(true)
    const [selectedCity, setSelectedCity] = useState<City>('서울') // 기본값: 서울로 설정, 타입은 City
+   const { startDate: zustandStartDate } = useDateStore() // Zustand에서 startDate 가져오기
 
    const handleResize = () => {
       setIsMobile(window.innerWidth <= 768)
@@ -58,10 +68,10 @@ const FestivalPage = () => {
       setIsCalendarVisible((prev) => !prev)
    }
 
-   const fetchFestivalData = async () => {
+   const fetchFestivalData = async (eventStartDate: string) => {
       setLoading(true)
       try {
-         const data = await Festival()
+         const data = await Festival(eventStartDate)
          setFestivalData(data)
       } catch (error) {
          console.error('Error fetching festival data:', error)
@@ -71,12 +81,18 @@ const FestivalPage = () => {
    }
 
    useEffect(() => {
-      fetchFestivalData()
+      const today = new Date()
+      const formattedToday = formatDateToYYYYMMDD(today)
+
+      const eventStartDate = zustandStartDate ? formatDateToYYYYMMDD(new Date(zustandStartDate)) : formattedToday
+
+      fetchFestivalData(eventStartDate)
+
       window.addEventListener('resize', handleResize)
       return () => {
          window.removeEventListener('resize', handleResize)
       }
-   }, [])
+   }, [zustandStartDate]) // 선택된 날짜가 변경될 때마다 호출
 
    return (
       <Box>
@@ -84,6 +100,23 @@ const FestivalPage = () => {
          <Box className={styles.container}>
             {isMobile && (
                <>
+                  <Box>
+                     {loading
+                        ? Array.from(new Array(3)).map((_, index) => <Skeleton key={index} variant="rectangular" width={700} height={340} sx={{ marginBottom: 2 }} />)
+                        : festivalData.map((item, index) => (
+                             <PreviewRowCard
+                                key={index}
+                                title={item.title}
+                                place={item.place}
+                                startDate={item.startDate}
+                                endDate={item.endDate}
+                                image={item.image}
+                                altText={item.altText}
+                                contentId={item.contentId}
+                                contentTypeId={item.contentTypeId}
+                             />
+                          ))}
+                  </Box>
                   {isCalendarVisible && <CustomCalendar />}
                   <Box className={styles.calendarWrapper}>
                      <CalendarButton onClick={toggleCalendarVisibility} />
