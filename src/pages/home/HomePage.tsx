@@ -18,6 +18,11 @@ const HomePage = () => {
                <ActionCard title={'미학당'} content={'2호점까지 진출한 새내기'} image={cafe1} />
             </Box>
          </Box>
+         <Box component="footer" sx={{ textAlign: 'center', padding: '1rem', marginTop: '2rem', backgroundColor: '#f0f0f0' }}>
+            <Typography variant="body2" color="textSecondary">
+               © 2024 mjss. All rights reserved.
+            </Typography>
+         </Box>
       </Box>
    )
 }
