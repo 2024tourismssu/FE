@@ -5,8 +5,10 @@ import { useContentStore } from '@/stores/contentStore.ts'
 import KakaoMap from '@components/map/KakaoMap.tsx'
 import CardMedia from '@mui/material/CardMedia'
 import Typography from '@mui/material/Typography'
-import styles from './style/DetailInfo.module.scss'
 import Card from '@mui/material/Card'
+import PhoneIcon from '@mui/icons-material/Phone'
+import LinkIcon from '@mui/icons-material/Link'
+import styles from './style/DetailInfo.module.scss'
 
 interface DetailProps {
    title: string
@@ -23,7 +25,7 @@ const DetailInfo = () => {
    const apiKey = import.meta.env.VITE_API_KEY
    const url = 'http://apis.data.go.kr/B551011/KorService1/detailCommon1'
 
-   const textLimit = 150
+   const textLimit = 250
 
    useEffect(() => {
       const fetchData = async () => {
@@ -80,10 +82,13 @@ const DetailInfo = () => {
          </Card>
 
          <Card className={styles.MainContent}>
-            <Typography variant="h5">{item?.title}</Typography>
+            <Typography variant="h5" sx={{ margin: 2 }}>
+               {item?.title}
+            </Typography>
 
-            <Typography className={styles.MainContent__Overview}>{isShowMore || !item?.overview ? item?.overview : `${item?.overview?.slice(0, textLimit)}...`}</Typography>
-
+            <Typography className={styles.MainContent__Overview} sx={{ fontSize: '14px', margin: 1.5 }}>
+               {isShowMore || !item?.overview ? item?.overview : `${item?.overview?.slice(0, textLimit)}...`}
+            </Typography>
             {item?.overview && item?.overview.length > textLimit && (
                <Typography onClick={() => setIsShowMore(!isShowMore)} style={{ cursor: 'pointer', fontSize: '12px' }}>
                   {isShowMore ? '[닫기]' : '[더보기]'}
@@ -95,14 +100,32 @@ const DetailInfo = () => {
          </Card>
          <Card className={styles.SubContent}>
             <Typography component="div">
-               홈페이지 링크 :{' '}
+               <LinkIcon
+                  fontSize="small"
+                  style={{
+                     marginRight: '8px',
+                     marginLeft: '8px',
+                     marginTop: '12px',
+                  }}
+               />
+               홈페이지 링크 :
                {item?.homepage && (
                   <a href={extractURL(item.homepage)} target="_blank" rel="noopener noreferrer">
                      {extractURL(item.homepage)}
                   </a>
                )}
             </Typography>
-            <Typography>전화 번호 : {item?.tel}</Typography>
+            <Typography component="div">
+               <PhoneIcon
+                  fontSize="small"
+                  style={{
+                     marginRight: '8px',
+                     marginLeft: '8px',
+                     marginTop: '12px',
+                  }}
+               />
+               전화 번호 : {item?.tel ? item.tel : '번호가 없습니다'}
+            </Typography>
          </Card>
       </Box>
    )

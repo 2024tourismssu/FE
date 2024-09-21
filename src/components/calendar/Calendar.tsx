@@ -13,7 +13,11 @@ interface CalendarTileProperties {
    view: 'month' | 'year' | 'decade' | 'century'
 }
 
-const CustomCalendar = () => {
+interface CustomCalendarProps {
+   className?: string
+}
+
+const CustomCalendar: React.FC<CustomCalendarProps> = ({ className }) => {
    const today = new Date()
    const [value, setValue] = useState<Value>([null, null])
    const { setDates } = useDateStore()
@@ -31,7 +35,7 @@ const CustomCalendar = () => {
    }, [value, setDates])
 
    return (
-      <Box>
+      <Box className={className}>
          <Calendar
             selectRange={true}
             showNeighboringMonth={false}

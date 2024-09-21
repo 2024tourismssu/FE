@@ -8,6 +8,7 @@ import CustomCalendar from '@components/calendar/Calendar.tsx'
 import CalendarButton from '@components/iconButton/CalendarButton.tsx'
 import Weather from '@components/weather/Weather.tsx'
 import PreviewColCard from '@components/card/PreviewColCard.tsx'
+import PreviewRowCard from '@components/card/PreviewRowCard.tsx'
 import styles from './styles/Concert.module.scss'
 import Concert from '@components/concert/Concert.tsx'
 
@@ -57,8 +58,7 @@ const ConcertPage = () => {
    const [festivalData, setFestivalData] = useState<FestivalItem[]>([])
    const [loading, setLoading] = useState<boolean>(true)
    const [selectedCity, setSelectedCity] = useState<City>('서울') // 기본값: 서울로 설정, 타입은 City
-   const { startDate: zustandStartDate } = useDateStore() // Zustand에서 startDate 가져오기
-
+   const { startDate: zustandStartDate } = useDateStore()
    const handleResize = () => {
       setIsMobile(window.innerWidth <= 768)
    }
@@ -91,7 +91,7 @@ const ConcertPage = () => {
       return () => {
          window.removeEventListener('resize', handleResize)
       }
-   }, [zustandStartDate]) // 선택된 날짜가 변경될 때마다 호출
+   }, [zustandStartDate])
 
    return (
       <Box>
@@ -99,7 +99,24 @@ const ConcertPage = () => {
          <Box className={styles.container}>
             {isMobile && (
                <>
-                  {isCalendarVisible && <CustomCalendar />}
+                  <Box>
+                     {loading
+                        ? Array.from(new Array(3)).map((_, index) => <Skeleton key={index} variant="rectangular" width={700} height={340} sx={{ marginBottom: 2 }} />)
+                        : festivalData.map((item, index) => (
+                             <PreviewRowCard
+                                key={index}
+                                title={item.title}
+                                place={item.place}
+                                startDate={item.startDate}
+                                endDate={item.endDate}
+                                image={item.image}
+                                altText={item.altText}
+                                contentId={item.contentId}
+                                contentTypeId={item.contentTypeId}
+                             />
+                          ))}
+                  </Box>
+                  {isCalendarVisible && <CustomCalendar className={styles.overlayCalendar} />}
                   <Box className={styles.calendarWrapper}>
                      <CalendarButton onClick={toggleCalendarVisibility} />
                   </Box>

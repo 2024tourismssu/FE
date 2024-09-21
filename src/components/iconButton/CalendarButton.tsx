@@ -14,9 +14,9 @@ const CalendarButton = ({ onClick }: props) => {
             width: '56px', // 버튼의 크기 (가로)
             height: '56px', // 버튼의 크기 (세로)
             borderRadius: '50%', // 둥근 모양으로 만들기
-            backgroundColor: '#3580BB', // 버튼 배경색 (원하는 색상으로 변경)
+            backgroundColor: '#1E781E', // 버튼 배경색 (원하는 색상으로 변경)
             '&:hover': {
-               backgroundColor: '#4A92C5', // 호버 시 배경색
+               backgroundColor: 'rgba(98, 180, 134, 0.23)', // 호버 시 배경색
             },
          }}
          onClick={onClick}

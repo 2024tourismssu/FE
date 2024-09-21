@@ -19,7 +19,7 @@ interface PreviewRowCardProps {
    contentTypeId?: string
 }
 
-const PreviewRowCard = ({ title, place, content, startDate, endDate, image, altText, contentId, contentTypeId }: PreviewRowCardProps) => {
+const PreviewRowCard = ({ title, place, content, image, altText, contentId, contentTypeId }: PreviewRowCardProps) => {
    const navigate = useNavigate()
    const setContent = useContentStore((state) => state.setContent)
 

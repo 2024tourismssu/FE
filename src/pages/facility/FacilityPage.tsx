@@ -8,8 +8,9 @@ import CustomCalendar from '@components/calendar/Calendar.tsx'
 import CalendarButton from '@components/iconButton/CalendarButton.tsx'
 import Weather from '@components/weather/Weather.tsx'
 import PreviewColCard from '@components/card/PreviewColCard.tsx'
-import styles from './styles/FacilityPage.module.scss'
 import Facility from '@components/facility/Facility.tsx'
+import PreviewRowCard from '@components/card/PreviewRowCard.tsx'
+import styles from './styles/FacilityPage.module.scss'
 
 interface FestivalItem {
    title: string
@@ -114,6 +115,23 @@ const FacilityPage = () => {
          <Box className={styles.container}>
             {isMobile && (
                <>
+                  <Box>
+                     {loading
+                        ? Array.from(new Array(3)).map((_, index) => <Skeleton key={index} variant="rectangular" width={700} height={340} sx={{ marginBottom: 2 }} />)
+                        : festivalData.map((item, index) => (
+                             <PreviewRowCard
+                                key={index}
+                                title={item.title}
+                                place={item.place}
+                                startDate={item.startDate}
+                                endDate={item.endDate}
+                                image={item.image}
+                                altText={item.altText}
+                                contentId={item.contentId}
+                                contentTypeId={item.contentTypeId}
+                             />
+                          ))}
+                  </Box>
                   {isCalendarVisible && <CustomCalendar />}
                   <Box className={styles.calendarWrapper}>
                      <CalendarButton onClick={toggleCalendarVisibility} />
