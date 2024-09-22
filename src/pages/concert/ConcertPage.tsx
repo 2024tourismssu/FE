@@ -116,7 +116,13 @@ const ConcertPage = () => {
                              />
                           ))}
                   </Box>
-                  {isCalendarVisible && <CustomCalendar className={styles.fixedCalendar} />}
+                  {/* 오버레이 추가 및 달력 표시 */}
+                  {isCalendarVisible && (
+                     <>
+                        <Box className={styles.overlay} onClick={toggleCalendarVisibility} /> {/* 오버레이 클릭 시 달력 닫힘 */}
+                        <CustomCalendar className={styles.fixedCalendar} />
+                     </>
+                  )}
                   <Box className={styles.calendarWrapper}>
                      <CalendarButton onClick={toggleCalendarVisibility} />
                   </Box>
