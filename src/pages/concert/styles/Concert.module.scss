@@ -41,13 +41,17 @@
   }
 }
 
-.overlayCalendar {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
-  background-color: white; /* 필요 시 배경색 추가 */
+.fixedCalendar {
+  position: fixed; /* 화면에 고정 */
+  top: 50%; /* 화면 중앙에 배치 */
+  left: 50%;
+  transform: translate(-50%, -50%); /* 수평, 수직 중앙 정렬 */
+  z-index: 1000; /* 다른 요소들 위에 겹치도록 */
+  background-color: white; /* 배경색 설정 */
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+  border-radius: 8px; /* 테두리 둥글게 */
+  padding: 20px; /* 내부 여백 */
+  max-width: 90vw; /* 화면 폭에 맞추어 크기 제한 */
+  max-height: 90vh; /* 화면 높이에 맞추어 크기 제한 */
+  overflow-y: auto; /* 달력 내용이 많을 때 스크롤 */
 }
-
-

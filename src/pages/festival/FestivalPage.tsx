@@ -117,7 +117,7 @@ const FestivalPage = () => {
                              />
                           ))}
                   </Box>
-                  {isCalendarVisible && <CustomCalendar />}
+                  {isCalendarVisible && <CustomCalendar className={styles.fixedCalendar} />}
                   <Box className={styles.calendarWrapper}>
                      <CalendarButton onClick={toggleCalendarVisibility} />
                   </Box>

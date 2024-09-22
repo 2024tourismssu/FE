@@ -116,7 +116,7 @@ const ConcertPage = () => {
                              />
                           ))}
                   </Box>
-                  {isCalendarVisible && <CustomCalendar className={styles.overlayCalendar} />}
+                  {isCalendarVisible && <CustomCalendar className={styles.fixedCalendar} />}
                   <Box className={styles.calendarWrapper}>
                      <CalendarButton onClick={toggleCalendarVisibility} />
                   </Box>
