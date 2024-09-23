@@ -1,11 +1,28 @@
 import Header from '@components/header/Header.tsx'
 import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
+import styles from './styles/PopupPage.module.scss'
+import cafe1 from '@assets/images/cafe1.jpg'
+import ActionCard from '@components/card/ActionCard.tsx'
 
 const PopupPage = () => {
    return (
       <Box>
          <Header />
-         <Box>PopupPage~</Box>
+         <Box className={styles.container}>
+            <Typography variant={'h3'}>팝업 스토어</Typography>
+            <Typography className={styles.container__subContent}>SNS 데이터를 분석한 팝업스토어입니다!</Typography>
+            <Box className={styles.container__mainContent}>
+               <ActionCard title={'슈니퐁당'} content={'숭실대에서 판매 중인 맛있는 카페집'} image={cafe1} />
+               <ActionCard title={'스타벅스'} content={'인어로 우려낸 커피가 자랑인 집'} image={cafe1} />
+               <ActionCard title={'미학당'} content={'2호점까지 진출한 새내기'} image={cafe1} />
+            </Box>
+         </Box>
+         <Box component="footer" sx={{ textAlign: 'center', padding: '1rem', marginTop: '2rem', backgroundColor: '#f0f0f0' }}>
+            <Typography variant="body2" color="textSecondary">
+               © 2024 mjss. All rights reserved.
+            </Typography>
+         </Box>
       </Box>
    )
 }
