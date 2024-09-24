@@ -4,8 +4,24 @@ import Typography from '@mui/material/Typography'
 import styles from './styles/PopupPage.module.scss'
 import cafe1 from '@assets/images/cafe1.jpg'
 import ActionCard from '@components/card/ActionCard.tsx'
+import { useEffect } from 'react'
+import axios from 'axios'
 
 const PopupPage = () => {
+   const url = 'http://13.211.48.115:3000/api/popup/stores'
+
+   useEffect(() => {
+      const fetchData = async () => {
+         try {
+            const response = await axios.get(url)
+            console.log(response)
+         } catch (error) {
+            console.error(error)
+         }
+      }
+      fetchData()
+   }, [])
+
    return (
       <Box>
          <Header />
