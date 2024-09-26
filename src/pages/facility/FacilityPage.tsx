@@ -11,7 +11,7 @@ import PreviewColCard from '@components/card/PreviewColCard.tsx'
 import Facility from '@components/facility/Facility.tsx'
 import PreviewRowCard from '@components/card/PreviewRowCard.tsx'
 import styles from './styles/FacilityPage.module.scss'
-
+import BasicPagenation from '@/components/pagenation/Pagenation'
 interface FestivalItem {
    title: string
    place: string
@@ -69,6 +69,8 @@ const FacilityPage = () => {
    const [festivalData, setFestivalData] = useState<FestivalItem[]>([])
    const [loading, setLoading] = useState<boolean>(true)
    const [selectedCity, setSelectedCity] = useState<City>('서울') // 기본값: 서울
+   const [pageNo, setPageNo] = useState<number>(1) // 페이지 번호 상태
+   const [totalPages, setTotalPages] = useState<number>(1) // 총 페이지 수 상태
    const { startDate: zustandStartDate } = useDateStore() // Zustand에서 startDate 가져오기
 
    const handleResize = () => {
@@ -79,12 +81,13 @@ const FacilityPage = () => {
       setIsCalendarVisible((prev) => !prev)
    }
 
-   const fetchFacilityData = async (eventStartDate: string, areaCode: number) => {
+   const fetchFacilityData = async (eventStartDate: string, areaCode: number, pageNo: number) => {
       setLoading(true)
       try {
          console.log(`Fetching data for area code: ${areaCode}, start date: ${eventStartDate}`)
-         const data = await Facility(areaCode) // Pass the area code to the Facility function
-         setFestivalData(data)
+         const data = await Facility(areaCode, pageNo) // Pass the area code to the Facility function
+         setFestivalData(data.items)
+         setTotalPages(data.totalPages)
       } catch (error) {
          console.error('Error fetching festival data:', error)
       } finally {
@@ -101,14 +104,16 @@ const FacilityPage = () => {
       // Get the area code based on the selected city
       const areaCode = cityAreaCodes[selectedCity]
 
-      fetchFacilityData(eventStartDate, areaCode)
+      fetchFacilityData(eventStartDate, areaCode, pageNo)
 
       window.addEventListener('resize', handleResize)
       return () => {
          window.removeEventListener('resize', handleResize)
       }
-   }, [zustandStartDate, selectedCity]) // 선택된 날짜와 도시가 변경될 때마다 호출
-
+   }, [zustandStartDate, selectedCity, pageNo]) // 선택된 날짜와 도시가 변경될 때마다 호출
+   const handlePageChange = (_event: React.ChangeEvent<unknown>, value: number) => {
+      setPageNo(value) // 페이지 번호 변경
+   }
    return (
       <Box>
          <Header />
@@ -182,6 +187,7 @@ const FacilityPage = () => {
                   </Box>
                </Box>
             )}
+            <BasicPagenation pageNo={pageNo} totalPages={totalPages} onChangePage={handlePageChange} />
          </Box>
       </Box>
    )

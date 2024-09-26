@@ -96,7 +96,7 @@ const FestivalPage = () => {
          window.removeEventListener('resize', handleResize)
       }
    }, [zustandStartDate, pageNo])
-   const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
+   const handlePageChange = (_event: React.ChangeEvent<unknown>, value: number) => {
       setPageNo(value) // 페이지 번호 변경
    }
 
