@@ -2,19 +2,23 @@ import Header from '@components/header/Header.tsx'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import styles from './styles/PopupPage.module.scss'
-import cafe1 from '@assets/images/cafe1.jpg'
 import ActionCard from '@components/card/ActionCard.tsx'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import axios from 'axios'
+import empty from '@assets/images/empty.jpg'
 
 const PopupPage = () => {
    const url = 'http://13.211.48.115:3000/api/popup/stores'
+   const [popupStores, setPopupStores] = useState<any[]>([]) // item 데이터를 저장할 상태
 
    useEffect(() => {
       const fetchData = async () => {
          try {
             const response = await axios.get(url)
-            console.log(response)
+            if (response.data.ok) {
+               const items = response.data.popupStores
+               setPopupStores(items) // 데이터를 상태에 저장
+            }
          } catch (error) {
             console.error(error)
          }
@@ -29,15 +33,21 @@ const PopupPage = () => {
             <Typography variant={'h3'}>팝업 스토어</Typography>
             <Typography className={styles.container__subContent}>SNS 데이터를 분석한 팝업스토어입니다!</Typography>
             <Box className={styles.container__mainContent}>
-               <ActionCard title={'슈니퐁당'} content={'숭실대에서 판매 중인 맛있는 카페집'} image={cafe1} />
-               <ActionCard title={'스타벅스'} content={'인어로 우려낸 커피가 자랑인 집'} image={cafe1} />
-               <ActionCard title={'미학당'} content={'2호점까지 진출한 새내기'} image={cafe1} />
+               {popupStores.length > 0 ? (
+                  popupStores.map((store) => (
+                     <ActionCard
+                        key={store._id}
+                        title={store.title}
+                        content={store.content}
+                        image={store.image !== '아직 없어용' ? store.image : empty} // 이미지 없을 시 기본 이미지 설정
+                        altText={store.title}
+                        tags={store.tags} // tags 전달
+                     />
+                  ))
+               ) : (
+                  <Typography>팝업스토어 데이터를 불러오는 중입니다...</Typography>
+               )}
             </Box>
-         </Box>
-         <Box component="footer" sx={{ textAlign: 'center', padding: '1rem', marginTop: '2rem', backgroundColor: '#f0f0f0' }}>
-            <Typography variant="body2" color="textSecondary">
-               © 2024 mjss. All rights reserved.
-            </Typography>
          </Box>
       </Box>
    )
