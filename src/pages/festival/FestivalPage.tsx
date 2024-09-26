@@ -11,6 +11,7 @@ import styles from './styles/FestivalPage.module.scss'
 import Festival from '@components/festival/Festival.tsx'
 import Typography from '@mui/material/Typography'
 import PreviewRowCard from '@components/card/PreviewRowCard.tsx'
+import BasicPagenation from '@/components/pagenation/Pagenation'
 
 interface FestivalItem {
    title: string
@@ -57,8 +58,8 @@ const FestivalPage = () => {
    const [isCalendarVisible, setIsCalendarVisible] = useState<boolean>(false)
    const [festivalData, setFestivalData] = useState<FestivalItem[]>([])
    const [loading, setLoading] = useState<boolean>(true)
-   const [selectedCity, setSelectedCity] = useState<City>('서울') // 기본값: 서울로 설정, 타입은 City
-   const { startDate: zustandStartDate } = useDateStore() // Zustand에서 startDate 가져오기
+   const [selectedCity, setSelectedCity] = useState<City>('서울')
+   const { startDate: zustandStartDate } = useDateStore()
 
    const handleResize = () => {
       setIsMobile(window.innerWidth <= 768)
@@ -83,16 +84,15 @@ const FestivalPage = () => {
    useEffect(() => {
       const today = new Date()
       const formattedToday = formatDateToYYYYMMDD(today)
-
       const eventStartDate = zustandStartDate ? formatDateToYYYYMMDD(new Date(zustandStartDate)) : formattedToday
 
-      fetchFestivalData(eventStartDate)
+      fetchFestivalData(eventStartDate) // pageNo가 변경될 때마다 데이터 재호출
 
       window.addEventListener('resize', handleResize)
       return () => {
          window.removeEventListener('resize', handleResize)
       }
-   }, [zustandStartDate]) // 선택된 날짜가 변경될 때마다 호출
+   }, [zustandStartDate])
 
    return (
       <Box>
@@ -117,10 +117,9 @@ const FestivalPage = () => {
                              />
                           ))}
                   </Box>
-                  {/* 오버레이 추가 및 달력 표시 */}
                   {isCalendarVisible && (
                      <>
-                        <Box className={styles.overlay} onClick={toggleCalendarVisibility} /> {/* 오버레이 클릭 시 달력 닫힘 */}
+                        <Box className={styles.overlay} onClick={toggleCalendarVisibility} />
                         <CustomCalendar className={styles.fixedCalendar} />
                      </>
                   )}
@@ -156,12 +155,7 @@ const FestivalPage = () => {
                         </Typography>
                         <FormControl fullWidth sx={{ marginBottom: 2, width: 100 }}>
                            <InputLabel id="city-select-label">도시 선택</InputLabel>
-                           <Select
-                              labelId="city-select-label"
-                              value={selectedCity}
-                              label="도시 선택"
-                              onChange={(e) => setSelectedCity(e.target.value as City)} // 타입캐스팅을 통해 타입 안정성 보장
-                           >
+                           <Select labelId="city-select-label" value={selectedCity} label="도시 선택" onChange={(e) => setSelectedCity(e.target.value as City)}>
                               {Object.keys(cityRegIds).map((city) => (
                                  <MenuItem key={city} value={city}>
                                     {city}
@@ -174,6 +168,7 @@ const FestivalPage = () => {
                   </Box>
                </Box>
             )}
+            <BasicPagenation />
          </Box>
       </Box>
    )
