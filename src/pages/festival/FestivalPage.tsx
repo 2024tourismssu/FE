@@ -59,6 +59,8 @@ const FestivalPage = () => {
    const [festivalData, setFestivalData] = useState<FestivalItem[]>([])
    const [loading, setLoading] = useState<boolean>(true)
    const [selectedCity, setSelectedCity] = useState<City>('서울')
+   const [pageNo, setPageNo] = useState<number>(1) // 페이지 번호 상태
+   const [totalPages, setTotalPages] = useState<number>(1) // 총 페이지 수 상태
    const { startDate: zustandStartDate } = useDateStore()
 
    const handleResize = () => {
@@ -69,11 +71,12 @@ const FestivalPage = () => {
       setIsCalendarVisible((prev) => !prev)
    }
 
-   const fetchFestivalData = async (eventStartDate: string) => {
+   const fetchFestivalData = async (eventStartDate: string, pageNo: number) => {
       setLoading(true)
       try {
-         const data = await Festival(eventStartDate)
-         setFestivalData(data)
+         const data = await Festival(eventStartDate, pageNo)
+         setFestivalData(data.items)
+         setTotalPages(data.totalPages)
       } catch (error) {
          console.error('Error fetching festival data:', error)
       } finally {
@@ -86,13 +89,16 @@ const FestivalPage = () => {
       const formattedToday = formatDateToYYYYMMDD(today)
       const eventStartDate = zustandStartDate ? formatDateToYYYYMMDD(new Date(zustandStartDate)) : formattedToday
 
-      fetchFestivalData(eventStartDate) // pageNo가 변경될 때마다 데이터 재호출
+      fetchFestivalData(eventStartDate, pageNo)
 
       window.addEventListener('resize', handleResize)
       return () => {
          window.removeEventListener('resize', handleResize)
       }
-   }, [zustandStartDate])
+   }, [zustandStartDate, pageNo])
+   const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
+      setPageNo(value) // 페이지 번호 변경
+   }
 
    return (
       <Box>
@@ -168,7 +174,7 @@ const FestivalPage = () => {
                   </Box>
                </Box>
             )}
-            <BasicPagenation />
+            <BasicPagenation pageNo={pageNo} totalPages={totalPages} onChangePage={handlePageChange} />
          </Box>
       </Box>
    )
