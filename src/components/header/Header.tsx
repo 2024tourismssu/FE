@@ -15,6 +15,7 @@ import IconButton from '@mui/material/IconButton'
 import MenuIcon from '@mui/icons-material/Menu'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
+import KakaoShare from '../share/KakaoShare.tsx'
 import { useNavigate } from 'react-router-dom'
 
 const pages = [
@@ -127,12 +128,7 @@ function Header() {
                   ))}
                </Box>
 
-               <Search>
-                  <SearchIconWrapper>
-                     <SearchIcon />
-                  </SearchIconWrapper>
-                  <StyledInputBase placeholder="Search…" inputProps={{ 'aria-label': 'search' }} />
-               </Search>
+               <KakaoShare />
 
                <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                   <IconButton size="large" aria-label="account of current user" aria-controls="menu-appbar" aria-haspopup="true" onClick={handleOpenNavMenu}>

@@ -1,15 +1,17 @@
 <!doctype html>
 <html lang="en">
-<head>
-   <meta charset="UTF-8" />
-   <link rel="icon" type="image/svg+xml" href="../FE/src/assets/images/react.svg" />
-   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-   <title>문전성시</title>
-   <script type="text/javascript"
-           src="//dapi.kakao.com/v2/maps/sdk.js?appkey=%VITE_KAKAO_MAP_API_KEY%&libraries=services,clusterer"></script>
-</head>
-<body>
-<div id="root"></div>
-<script type="module" src="/src/main.tsx"></script>
-</body>
+   <head>
+      <meta charset="UTF-8" />
+      <link rel="icon" type="image/svg+xml" href="../FE/src/assets/images/react.svg" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>문전성시</title>
+      <!-- kakao map API -->
+      <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=%VITE_KAKAO_MAP_API_KEY%&libraries=services,clusterer"></script>
+      <!-- kakao 공유하기 API -->
+      <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js" integrity="sha384-TiCUE00h649CAMonG018J2ujOgDKW/kVWlChEuu4jK2vxfAAD0eZxzCKakxg55G4" crossorigin="anonymous"></script>
+   </head>
+   <body>
+      <div id="root"></div>
+      <script type="module" src="/src/main.tsx"></script>
+   </body>
 </html>
