@@ -58,8 +58,8 @@ const ActionCard = ({ title, content, image, altText, tags }: ActionAreaCardProp
                         position: 'absolute',
                         top: 0,
                         left: 0,
-                        width: '100%',
-                        height: '100%',
+                        width: 300,
+                        height: 400,
                         display: hovered ? 'flex' : 'none', // Hover 시 표시
                         alignItems: 'center',
                         justifyContent: 'center',

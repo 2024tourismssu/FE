@@ -9,7 +9,7 @@ interface BasicPaginationProps {
 
 const BasicPagenation = ({ pageNo, totalPages, onChangePage }: BasicPaginationProps) => {
    return (
-      <Stack spacing={2} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+      <Stack spacing={2} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', paddingBottom: 3 }}>
          <Pagination count={totalPages} page={pageNo} onChange={onChangePage} />
       </Stack>
    )
