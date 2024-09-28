@@ -6,9 +6,6 @@ import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import Button from '@mui/material/Button'
-import SearchIcon from '@mui/icons-material/Search'
-import { styled } from '@mui/material/styles'
-import InputBase from '@mui/material/InputBase'
 import ImageComponent from '../image/Image.tsx'
 import Logo from '@assets/images/Logo_v2.png'
 import IconButton from '@mui/material/IconButton'
@@ -24,44 +21,6 @@ const pages = [
    { label: '문화시설', path: '/facility' },
    { label: '팝업 스토어', path: '/popup' },
 ]
-
-const Search = styled('div')(({ theme }) => ({
-   position: 'relative',
-   borderRadius: theme.shape.borderRadius,
-   backgroundColor: 'rgba(98, 180, 134, 0.23)',
-   marginLeft: '1rem',
-   marginRight: '1rem',
-   width: '40%',
-   [theme.breakpoints.up('md')]: {
-      width: '25%',
-   },
-}))
-
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-   padding: theme.spacing(0, 2),
-   height: '100%',
-   position: 'absolute',
-   pointerEvents: 'none',
-   display: 'flex',
-   alignItems: 'center',
-   justifyContent: 'center',
-}))
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-   color: 'inherit',
-   width: '100%',
-   '& .MuiInputBase-input': {
-      padding: theme.spacing(1, 1, 1, 0),
-      paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-      transition: theme.transitions.create('width'),
-      [theme.breakpoints.up('md')]: {
-         width: '12ch',
-         '&:focus': {
-            width: '20ch',
-         },
-      },
-   },
-}))
 
 function Header() {
    const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null)
