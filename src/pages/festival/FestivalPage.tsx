@@ -11,6 +11,7 @@ import styles from './styles/FestivalPage.module.scss'
 import Festival from '@components/festival/Festival.tsx'
 import Typography from '@mui/material/Typography'
 import PreviewRowCard from '@components/card/PreviewRowCard.tsx'
+import BasicPagenation from '@/components/pagenation/Pagenation'
 
 interface FestivalItem {
    title: string
@@ -57,8 +58,10 @@ const FestivalPage = () => {
    const [isCalendarVisible, setIsCalendarVisible] = useState<boolean>(false)
    const [festivalData, setFestivalData] = useState<FestivalItem[]>([])
    const [loading, setLoading] = useState<boolean>(true)
-   const [selectedCity, setSelectedCity] = useState<City>('서울') // 기본값: 서울로 설정, 타입은 City
-   const { startDate: zustandStartDate } = useDateStore() // Zustand에서 startDate 가져오기
+   const [selectedCity, setSelectedCity] = useState<City>('서울')
+   const [pageNo, setPageNo] = useState<number>(1) // 페이지 번호 상태
+   const [totalPages, setTotalPages] = useState<number>(1) // 총 페이지 수 상태
+   const { startDate: zustandStartDate } = useDateStore()
 
    const handleResize = () => {
       setIsMobile(window.innerWidth <= 768)
@@ -68,11 +71,12 @@ const FestivalPage = () => {
       setIsCalendarVisible((prev) => !prev)
    }
 
-   const fetchFestivalData = async (eventStartDate: string) => {
+   const fetchFestivalData = async (eventStartDate: string, pageNo: number) => {
       setLoading(true)
       try {
-         const data = await Festival(eventStartDate)
-         setFestivalData(data)
+         const data = await Festival(eventStartDate, pageNo)
+         setFestivalData(data.items)
+         setTotalPages(data.totalPages)
       } catch (error) {
          console.error('Error fetching festival data:', error)
       } finally {
@@ -83,16 +87,18 @@ const FestivalPage = () => {
    useEffect(() => {
       const today = new Date()
       const formattedToday = formatDateToYYYYMMDD(today)
-
       const eventStartDate = zustandStartDate ? formatDateToYYYYMMDD(new Date(zustandStartDate)) : formattedToday
 
-      fetchFestivalData(eventStartDate)
+      fetchFestivalData(eventStartDate, pageNo)
 
       window.addEventListener('resize', handleResize)
       return () => {
          window.removeEventListener('resize', handleResize)
       }
-   }, [zustandStartDate]) // 선택된 날짜가 변경될 때마다 호출
+   }, [zustandStartDate, pageNo])
+   const handlePageChange = (_event: React.ChangeEvent<unknown>, value: number) => {
+      setPageNo(value) // 페이지 번호 변경
+   }
 
    return (
       <Box>
@@ -117,7 +123,12 @@ const FestivalPage = () => {
                              />
                           ))}
                   </Box>
-                  {isCalendarVisible && <CustomCalendar />}
+                  {isCalendarVisible && (
+                     <>
+                        <Box className={styles.overlay} onClick={toggleCalendarVisibility} />
+                        <CustomCalendar className={styles.fixedCalendar} />
+                     </>
+                  )}
                   <Box className={styles.calendarWrapper}>
                      <CalendarButton onClick={toggleCalendarVisibility} />
                   </Box>
@@ -150,12 +161,7 @@ const FestivalPage = () => {
                         </Typography>
                         <FormControl fullWidth sx={{ marginBottom: 2, width: 100 }}>
                            <InputLabel id="city-select-label">도시 선택</InputLabel>
-                           <Select
-                              labelId="city-select-label"
-                              value={selectedCity}
-                              label="도시 선택"
-                              onChange={(e) => setSelectedCity(e.target.value as City)} // 타입캐스팅을 통해 타입 안정성 보장
-                           >
+                           <Select labelId="city-select-label" value={selectedCity} label="도시 선택" onChange={(e) => setSelectedCity(e.target.value as City)}>
                               {Object.keys(cityRegIds).map((city) => (
                                  <MenuItem key={city} value={city}>
                                     {city}
@@ -168,6 +174,7 @@ const FestivalPage = () => {
                   </Box>
                </Box>
             )}
+            <BasicPagenation pageNo={pageNo} totalPages={totalPages} onChangePage={handlePageChange} />
          </Box>
       </Box>
    )

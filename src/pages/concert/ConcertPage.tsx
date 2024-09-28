@@ -11,6 +11,7 @@ import PreviewColCard from '@components/card/PreviewColCard.tsx'
 import PreviewRowCard from '@components/card/PreviewRowCard.tsx'
 import styles from './styles/Concert.module.scss'
 import Concert from '@components/concert/Concert.tsx'
+import BasicPagenation from '@/components/pagenation/Pagenation'
 
 interface FestivalItem {
    title: string
@@ -58,7 +59,10 @@ const ConcertPage = () => {
    const [festivalData, setFestivalData] = useState<FestivalItem[]>([])
    const [loading, setLoading] = useState<boolean>(true)
    const [selectedCity, setSelectedCity] = useState<City>('서울') // 기본값: 서울로 설정, 타입은 City
+   const [pageNo, setPageNo] = useState<number>(1) // 페이지 번호 상태
+   const [totalPages, setTotalPages] = useState<number>(1) // 총 페이지 수 상태
    const { startDate: zustandStartDate } = useDateStore()
+
    const handleResize = () => {
       setIsMobile(window.innerWidth <= 768)
    }
@@ -67,11 +71,15 @@ const ConcertPage = () => {
       setIsCalendarVisible((prev) => !prev)
    }
 
-   const fetchConcertData = async (eventStartDate: string) => {
+   const fetchConcertData = async (eventStartDate: string, pageNo: number) => {
       setLoading(true)
       try {
-         const data = await Concert(eventStartDate)
-         setFestivalData(data)
+         const data = await Concert(eventStartDate, pageNo)
+         if (data) {
+            // data가 정의된 경우만 처리
+            setFestivalData(data.items || []) // data.items가 정의된 경우
+            setTotalPages(data.totalPages || 1) // data.totalPages가 정의된 경우
+         }
       } catch (error) {
          console.error('Error fetching festival data:', error)
       } finally {
@@ -85,13 +93,17 @@ const ConcertPage = () => {
 
       const eventStartDate = zustandStartDate ? formatDateToYYYYMMDD(new Date(zustandStartDate)) : formattedToday
 
-      fetchConcertData(eventStartDate)
+      fetchConcertData(eventStartDate, pageNo)
 
       window.addEventListener('resize', handleResize)
       return () => {
          window.removeEventListener('resize', handleResize)
       }
-   }, [zustandStartDate])
+   }, [zustandStartDate, pageNo])
+
+   const handlePageChange = (_event: React.ChangeEvent<unknown>, value: number) => {
+      setPageNo(value) // 페이지 번호 변경
+   }
 
    return (
       <Box>
@@ -116,7 +128,13 @@ const ConcertPage = () => {
                              />
                           ))}
                   </Box>
-                  {isCalendarVisible && <CustomCalendar className={styles.overlayCalendar} />}
+                  {/* 오버레이 추가 및 달력 표시 */}
+                  {isCalendarVisible && (
+                     <>
+                        <Box className={styles.overlay} onClick={toggleCalendarVisibility} /> {/* 오버레이 클릭 시 달력 닫힘 */}
+                        <CustomCalendar className={styles.fixedCalendar} />
+                     </>
+                  )}
                   <Box className={styles.calendarWrapper}>
                      <CalendarButton onClick={toggleCalendarVisibility} />
                   </Box>
@@ -167,6 +185,7 @@ const ConcertPage = () => {
                   </Box>
                </Box>
             )}
+            <BasicPagenation pageNo={pageNo} totalPages={totalPages} onChangePage={handlePageChange} />
          </Box>
       </Box>
    )
