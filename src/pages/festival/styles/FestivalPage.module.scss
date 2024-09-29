@@ -1,0 +1,68 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  margin-top: 8rem;
+
+}
+
+.calendarWrapper {
+  position: fixed;
+  bottom: 72px;
+  right: 16px;
+  z-index: 999;
+  background-color: white;
+  border-radius: 8px;
+
+}
+
+.buttonContainer {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  z-index: 1000;
+}
+
+.titleContainer {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.contentContainer {
+  display: flex;
+
+
+  .cardContainer {
+
+  }
+}
+
+.fixedCalendar {
+  position: fixed;
+  top: 50%; /* 화면 중앙에 배치 */
+  left: 50%;
+  transform: translate(-50%, -50%); /* 수평, 수직 중앙 정렬 */
+  z-index: 1001; /* 오버레이 위에 있도록 설정 */
+  background-color: white;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 20px;
+  max-width: 90vw;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+/* 오버레이 스타일 */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5); /* 반투명 회색 배경 */
+  z-index: 1000; /* 달력 아래, 다른 콘텐츠 위에 위치 */
+}

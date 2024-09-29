@@ -1,0 +1,25 @@
+.Container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 0.5rem;
+  margin-top: 5rem;
+
+  justify-content: center;
+  align-items: center;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+.MainContent, .SubContent, .Map, .Media {
+  width: 400px;
+  height: 400px;
+}
+
+
+.Img {
+  width: 400px;
+  height: 400px;
+}
