@@ -88,7 +88,6 @@ const Weather = ({ regId, tmFc }: WeatherProps) => {
 
    useEffect(() => {
       fetchWeatherData()
-      console.log(regId)
    }, [regId, tmFc])
 
    return (

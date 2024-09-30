@@ -1,24 +1,24 @@
 .container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  height: 100vh;
-  margin-top: 8rem;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   width: 100%;
+   height: 100vh;
+   margin-top: 10rem;
 
-  &__subContent {
-    padding-top: 1.5rem;
-    font-size: 12px;
-  }
+   &__subContent {
+      padding-top: 1.5rem;
+      font-size: 12px;
+   }
 
-  &__mainContent {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2rem;
-    margin-top: 4rem;
-
-    @media (max-width: 768px) {
-      grid-template-columns: 1fr;
-    }
-  }
+   &__mainContent {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+      margin-top: 4rem;
+      margin-bottom: 5rem;
+      @media (max-width: 768px) {
+         grid-template-columns: 1fr;
+      }
+   }
 }

@@ -8,7 +8,7 @@ import axios from 'axios'
 import empty from '@assets/images/empty.jpg'
 
 const PopupPage = () => {
-   const url = 'http://13.211.48.115:3000/api/popup/stores'
+   const url = 'mjss-ssu.info:3000/api/popup/stores'
    const [popupStores, setPopupStores] = useState<any[]>([])
 
    useEffect(() => {
