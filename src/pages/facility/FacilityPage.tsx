@@ -5,7 +5,6 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { FormControl, InputLabel, MenuItem, Select, Skeleton } from '@mui/material'
 import CustomCalendar from '@components/calendar/Calendar.tsx'
-import CalendarButton from '@components/iconButton/CalendarButton.tsx'
 import Weather from '@components/weather/Weather.tsx'
 import PreviewColCard from '@components/card/PreviewColCard.tsx'
 import Facility from '@components/facility/Facility.tsx'
@@ -77,10 +76,6 @@ const FacilityPage = () => {
       setIsMobile(window.innerWidth <= 768)
    }
 
-   const toggleCalendarVisibility = () => {
-      setIsCalendarVisible((prev) => !prev)
-   }
-
    const fetchFacilityData = async (eventStartDate: string, areaCode: number, pageNo: number) => {
       setLoading(true)
       try {
@@ -138,9 +133,6 @@ const FacilityPage = () => {
                           ))}
                   </Box>
                   {isCalendarVisible && <CustomCalendar />}
-                  <Box className={styles.calendarWrapper}>
-                     <CalendarButton onClick={toggleCalendarVisibility} />
-                  </Box>
                </>
             )}
             {!isMobile && (

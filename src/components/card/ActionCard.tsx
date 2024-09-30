@@ -11,9 +11,11 @@ interface ActionAreaCardProps {
    image?: string
    altText?: string
    tags?: string[] // tags 배열 추가
+   addr?: string
+   time?: string
 }
 
-const ActionCard = ({ title, content, image, altText, tags }: ActionAreaCardProps) => {
+const ActionCard = ({ title, content, image, altText, tags, addr, time }: ActionAreaCardProps) => {
    const [hovered, setHovered] = useState(false) // hover 상태 관리
 
    return (
@@ -21,7 +23,7 @@ const ActionCard = ({ title, content, image, altText, tags }: ActionAreaCardProp
          sx={{
             maxWidth: 400,
             width: 300,
-            height: 350,
+            height: 400,
             position: 'relative',
             overflow: 'hidden', // 카드 바깥으로 내용이 나가지 않도록 함
          }}
@@ -31,16 +33,20 @@ const ActionCard = ({ title, content, image, altText, tags }: ActionAreaCardProp
          <CardActionArea>
             <CardMedia component="img" height="150" image={image} alt={altText} />
             <CardContent>
-               <Typography gutterBottom variant="h5" component="div">
+               <Typography gutterBottom variant="h6" component="div">
                   {title}
+               </Typography>
+               <Typography gutterBottom fontSize={'1rem'} component="div">
+                  {addr}
+               </Typography>
+               <Typography gutterBottom fontSize={'0.8rem'} component="div">
+                  {time}
                </Typography>
 
                {/* tags 표시 */}
                {tags && tags.length > 0 && (
                   <Box mt={2}>
-                     <Typography variant="subtitle1" component="div">
-                        Tags:
-                     </Typography>
+                     <Typography variant="subtitle1" component="div"></Typography>
                      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '5px' }}>
                         {tags.map((tag, index) => (
                            <Typography key={index} variant="body2" color="primary">

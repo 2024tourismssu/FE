@@ -30,7 +30,7 @@ const PreviewRowCard = ({ title, place, content, image, altText, contentId, cont
    }
 
    return (
-      <Card sx={{ maxWidth: 345 }} onClick={handleClick}>
+      <Card sx={{ maxWidth: 345, margin: 2 }} onClick={handleClick}>
          <CardActionArea>
             <CardMedia component="img" height="140" image={image} alt={altText} />
             <CardContent>

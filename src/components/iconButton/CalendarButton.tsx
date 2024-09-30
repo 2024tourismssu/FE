@@ -11,10 +11,10 @@ const CalendarButton = ({ onClick }: props) => {
       <IconButton
          className={styles.buttonContainer}
          sx={{
-            width: '56px', // 버튼의 크기 (가로)
-            height: '56px', // 버튼의 크기 (세로)
+            width: '48px', // 버튼의 크기 (가로)
+            height: '48px', // 버튼의 크기 (세로)
             borderRadius: '50%', // 둥근 모양으로 만들기
-            backgroundColor: '#1E781E', // 버튼 배경색 (원하는 색상으로 변경)
+            backgroundColor: '#62B486', // 버튼 배경색 (원하는 색상으로 변경)
             '&:hover': {
                backgroundColor: 'rgba(98, 180, 134, 0.23)', // 호버 시 배경색
             },

@@ -131,7 +131,7 @@ const DetailInfo = () => {
                />
                전화 번호 : {item?.tel ? item.tel : '번호가 없습니다'}
             </Typography>
-            <Button variant="contained" color="primary" onClick={openRoadView} style={{ marginTop: '10px' }}>
+            <Button variant="contained" onClick={openRoadView} style={{ marginTop: '10px', backgroundColor: '#62B486' }}>
                길찾기
             </Button>
          </Card>

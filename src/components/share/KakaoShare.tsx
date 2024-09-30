@@ -40,12 +40,11 @@ const KakaoShare = () => {
                   fontSize: '12px',
                },
                '@media (max-width: 400px)': {
-                  padding: '4px 8px',
                   fontSize: '10px',
                },
             }}
          >
-            카톡 공유하기
+            공유하기
          </Button>
       </Box>
    )
