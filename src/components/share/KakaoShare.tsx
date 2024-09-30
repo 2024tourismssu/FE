@@ -37,11 +37,11 @@ const KakaoShare = () => {
 
                '@media (max-width: 600px)': {
                   padding: '6px 12px',
-                  fontSize: '14px',
+                  fontSize: '12px',
                },
                '@media (max-width: 400px)': {
                   padding: '4px 8px',
-                  fontSize: '12px',
+                  fontSize: '10px',
                },
             }}
          >
