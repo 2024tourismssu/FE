@@ -4,7 +4,6 @@ import Header from '@components/header/Header.tsx'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { FormControl, InputLabel, MenuItem, Select, Skeleton } from '@mui/material'
-import CustomCalendar from '@components/calendar/Calendar.tsx'
 import Weather from '@components/weather/Weather.tsx'
 import PreviewColCard from '@components/card/PreviewColCard.tsx'
 import Facility from '@components/facility/Facility.tsx'
@@ -64,7 +63,7 @@ const formatDateToYYYYMMDD = (date: Date): string => {
 
 const FacilityPage = () => {
    const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 768)
-   const [isCalendarVisible, setIsCalendarVisible] = useState<boolean>(false)
+
    const [festivalData, setFestivalData] = useState<FestivalItem[]>([])
    const [loading, setLoading] = useState<boolean>(true)
    const [selectedCity, setSelectedCity] = useState<City>('서울') // 기본값: 서울
@@ -132,7 +131,6 @@ const FacilityPage = () => {
                              />
                           ))}
                   </Box>
-                  {isCalendarVisible && <CustomCalendar />}
                </>
             )}
             {!isMobile && (
