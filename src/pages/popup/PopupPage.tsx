@@ -8,7 +8,7 @@ import axios from 'axios'
 import empty from '@assets/images/empty.jpg'
 
 const PopupPage = () => {
-   const url = 'mjss-ssu.info:3000/api/popup/stores'
+   const url = 'http://mjss-ssu.info:3000/api/popup/stores'
    const [popupStores, setPopupStores] = useState<any[]>([])
 
    useEffect(() => {
@@ -42,6 +42,8 @@ const PopupPage = () => {
                         title={store.title}
                         content={store.content}
                         image={store.image !== '아직 없어용' ? store.image : empty} // 이미지 없을 시 기본 이미지 설정
+                        addr={store.address}
+                        time={store.time}
                         altText={store.title}
                         tags={store.tags}
                      />
